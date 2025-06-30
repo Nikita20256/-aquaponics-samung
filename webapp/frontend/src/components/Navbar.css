@@ -1,0 +1,53 @@
+.navbar {
+    background-color: #0F2925; /* Изменен цвет фона */
+    padding: 20px 40px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
+  }
+  
+  .navbar-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    
+  }
+  
+  .navbar-left {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+  }
+  
+  .navbar-logo {
+    color: #f5d742;
+    font-size: 24px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .navbar-links {
+    display: flex;
+    gap: 25px;
+  }
+  
+  .nav-button {
+    color: #F9F9F9;
+    font-size: 16px;
+    font-weight: 600;
+    background: transparent;
+    padding: 20px , 10px;
+    border: 1px,solid #f5d742;
+    cursor: pointer;
+    padding: 8px 12px;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+  
+  .nav-button:hover {
+    background-color: rgba(198, 204, 68, 0.2);
+  }

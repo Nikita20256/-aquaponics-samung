@@ -1,0 +1,17 @@
+.react-datepicker-wrapper {
+  margin: 0 10px;
+}
+
+.react-datepicker__input-container input {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.chart-controls {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 15px;
+}

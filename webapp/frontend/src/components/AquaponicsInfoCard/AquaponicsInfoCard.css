@@ -1,0 +1,208 @@
+.aquaponics-card {
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0F2925 0%, #1a4314 100%);
+    border-radius: 16px;
+    padding: 20px;
+    width: 330px;
+    height: 760px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    border: 1px solid rgba(245, 215, 66, 0.3);
+    transition: all 0.3s ease;
+  }
+  
+  .device-image-container {
+    height: 200px;
+    margin: 0 auto 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background: 
+      radial-gradient(
+        circle at center,
+        rgba(245, 215, 66, 0.1) 0%,
+        rgba(15, 41, 37, 0.5) 70%
+      );
+    width: 90%;
+    position: relative;
+    box-shadow:
+      inset 0 0 15px rgba(245, 215, 66, 0.2),
+      0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(245, 215, 66, 0.2);
+  }
+  
+  
+  .device-info-section h3 {
+    margin: 5px 0;
+    font-size: 1.3rem;
+    text-align: center;
+    color: #f5d742;
+  }
+  
+  .status-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+    font-size: 0.9rem;
+  }
+  
+  .fact-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    margin-top: 15px;
+  }
+  
+  .fact-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+  
+  .fact-header h4 {
+    margin: 0;
+    color: #f5d742;
+    font-size: 1.2rem;
+  }
+  
+  .icons-row {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .icon {
+    font-size: 1.8rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .fact-content {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0,0,0,0.2);
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.1);
+   
+  }
+  
+  .fact-content p {
+
+    line-height: 1.3;
+    font-size: 1.5rem;
+    text-align: start;
+    margin-left: 5px;
+  }
+  
+  /* Анимации и медиа-запросы остаются без изменений */
+  .device-image-container {
+    height: 200px;
+    margin: 0 auto 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 10px;
+    background: 
+      radial-gradient(
+        circle at center,
+        rgba(245, 215, 66, 0.1) 0%,
+        rgba(15, 41, 37, 0.5) 70%
+      );
+    width: 90%;
+    position: relative;
+    box-shadow:
+      inset 0 0 15px rgba(245, 215, 66, 0.2),
+      0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    border: 1px solid rgba(245, 215, 66, 0.2);
+  }
+  
+  .device-image {
+    max-height: 200px;
+    max-width: 200px;
+    object-fit: contain;
+    filter: 
+      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
+      brightness(1.05);
+    transform: scale(0.98);
+    transition: 
+      transform 0.5s ease,
+      filter 0.5s ease;
+    position: relative;
+    z-index: 2;
+  }
+  
+  .device-image-container:hover {
+    background:
+      radial-gradient(
+        circle at center,
+        rgba(245, 215, 66, 0.2) 0%,
+        rgba(15, 41, 37, 0.6) 70%
+      );
+    box-shadow:
+      inset 0 0 20px rgba(245, 215, 66, 0.3),
+      0 6px 15px rgba(0, 0, 0, 0.3);
+  }
+  
+  .device-image-container:hover .device-image {
+    transform: scale(1.02);
+    filter:
+      drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
+      brightness(1.1);
+  }
+  
+  /* Эффект светового кольца */
+  .device-image-container::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background: radial-gradient(
+      circle,
+      rgba(245, 215, 66, 0.15) 0%,
+      transparent 70%
+    );
+    z-index: 1;
+    opacity: 0.7;
+    transition: all 0.5s ease;
+  }
+  
+  .device-image-container:hover::after {
+    width: 200px;
+    height: 200px;
+    opacity: 0.9;
+  }
+  
+  /* Анимация пульсации */
+  @keyframes subtlePulse {
+    0% { transform: translate(-50%, -50%) scale(1); }
+    50% { transform: translate(-50%, -50%) scale(1.03); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+  }
+  
+  .device-image-container::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 190px;
+    height: 190px;
+    border-radius: 50%;
+    border: 2px solid rgba(245, 215, 66, 0.1);
+    z-index: 0;
+    animation: subtlePulse 4s infinite ease-in-out;
+    pointer-events: none;
+  }

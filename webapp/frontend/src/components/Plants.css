@@ -1,0 +1,140 @@
+/* Plants.css */
+.plants-container {
+  position: relative;
+  min-height: 100vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* или center — по желанию */
+  gap: 20px; /* расстояние между текстом и изображением */
+}
+.plant-text {
+  flex: 1;
+}
+.plant-image {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.plants-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  z-index: 1;
+}
+
+.plants-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.plant-section {
+  margin-bottom: 40px;
+}
+
+.plant-title {
+  font-size: 2.2rem;
+  color: #1a4314;
+  margin-bottom: 20px;
+  font-weight: bold;
+  font-family: 'Calypso', sans-serif;
+}
+
+.plant-text-content {
+  display: flex;
+  gap: 40px;
+  align-items: flex-start;
+  font-family: 'Calypso', sans-serif;
+}
+
+.plant-text {
+  flex: 1;
+}
+
+.plant-image-wrapper {
+  flex: 0 0 300px;
+ 
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.plant-image {
+  max-width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+}
+
+.plant-subtitle {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #2E7D32;
+}
+
+.plant-list {
+  padding-left: 20px;
+  margin-bottom: 20px;
+  list-style-type: none;
+}
+
+.plant-list li {
+  margin-bottom: 8px;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 15px;
+}
+
+.plant-list li::before {
+  content: "•";
+  color: #2E7D32;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+}
+
+.plant-description {
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.divider {
+  height: 1px;
+  background-color: #ddd;
+  margin: 30px 0;
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .plant-text-content {
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .plant-image-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    order: -1;
+  }
+  
+  .plant-title {
+    font-size: 1.8rem;
+  }
+  
+  .plants-container {
+    padding: 20px 15px;
+    background-attachment: scroll;
+  }
+}

@@ -1,0 +1,81 @@
+.home-container {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url('./assets/images/imegmain.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 20px;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 2;
+  padding: 60px 40px;
+  max-width: 800px;
+  width: 100%;
+  text-align: center; 
+  background-color: rgba(186, 215, 175, 0.4);
+  border-radius: 20px ;
+}
+
+.main-title {
+  color: #1a4314; 
+  font-size: 2.9rem;
+  margin-bottom: 30px;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 6pt;
+  font-family:'Calypso', sans-serif;
+}
+
+.description-text {
+  font-size: 1.4rem;
+  line-height: 1.8;
+  margin-bottom: 50px;
+  color: #2c4f16;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  font-family: 'Calypso', sans-serif;
+  text-align: center; 
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.cta-button {
+  margin-top: 18px;
+  background-color: #1a4314;
+  color: #f5d742;
+  padding: 18px 45px;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.3rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  font-family: 'Calypso', sans-serif;
+  letter-spacing: 1px;
+}
+
+.cta-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
