@@ -11,7 +11,7 @@ const CustomDatePicker = ({ selected, onChange, ...props }) => {
       dateFormat="dd.MM.yyyy HH:mm"
       showTimeSelect
       timeFormat="HH:mm"
-      timeIntervals={10}
+      timeIntervals={15}
       {...props}
     />
   );

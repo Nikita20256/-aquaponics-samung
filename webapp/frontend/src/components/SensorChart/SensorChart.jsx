@@ -51,7 +51,7 @@ const SensorChart = ({ historicalData, startDate, endDate, onTimeRangeChange }) 
 
   // Подготовка данных для графика (только влажность и свет)
   const chartData = {
-    labels: historicalData?.humidity?.map(item => formatDate(item.timestamp)) || [],
+    labels: historicalData?.humidity?.map(item => item.timestamp.replace(' ', 'T') + 'Z') || [],
     datasets: [
       {
         label: 'Humidity (%)',
@@ -97,6 +97,15 @@ const SensorChart = ({ historicalData, startDate, endDate, onTimeRangeChange }) 
       },
     },
     scales: {
+      x: {
+        ticks: {
+          callback: function(value, index, ticks) {
+            const label = this.getLabelForValue(value);
+            const date = new Date(label);
+            return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: false });
+          }
+        }
+      },
       y: {
         beginAtZero: false
       }

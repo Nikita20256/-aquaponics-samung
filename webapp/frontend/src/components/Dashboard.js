@@ -24,6 +24,8 @@ const ErrorMessage = ({ message, onRetry }) => (
 );
 
 const API_CONFIG = {
+  //baseURL: 'https://aquaponiks.ru',
+  
   baseURL: 'http://localhost:3000',
   endpoints: {
     device: '/user/device',

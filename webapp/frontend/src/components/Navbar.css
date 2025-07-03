@@ -14,7 +14,6 @@
     align-items: center;
     max-width: 1200px;
     margin: 0 auto;
-    
   }
   
   .navbar-left {
@@ -33,6 +32,7 @@
   .navbar-links {
     display: flex;
     gap: 25px;
+    font-family: 'Calypso', sans-serif;
   }
   
   .nav-button {
@@ -46,6 +46,7 @@
     padding: 8px 12px;
     border-radius: 2px;
     transition: all 0.3s ease;
+    font-family: 'Calypso', sans-serif;
   }
   
   .nav-button:hover {

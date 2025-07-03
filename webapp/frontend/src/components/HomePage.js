@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
 
-
 import './HomePage.css';
 import '../styles/fonts.css';
 
@@ -23,7 +22,7 @@ export default function HomePage() {
             Мы предлагаем вам опробовать новый мир домашнего выращивания растений.
           </p>
         </div>
-       
+        
         <div className="button-container">
           <button 
             onClick={() => navigate('/plants')}
