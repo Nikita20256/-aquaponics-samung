@@ -27,7 +27,7 @@ const DEVICES = [
     login: 'device2',
     password: '456',
   },
-]; // Пример устройств
+];
 
 // SQLite подключение
 const db = new sqlite3.Database('aquaponics.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -116,17 +116,10 @@ async function processInsertQueue() {
 
 // Форматирование времени для занесения в базу
 function getLocalTimestamp() {
-  const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const hours = String(now.getHours()).padStart(2, '0');
-  const minutes = String(now.getMinutes()).padStart(2, '0');
-  const seconds = String(now.getSeconds()).padStart(2, '0');
-  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`; // Формат: 2025-05-14 22:39:37
+  return new Date().toISOString(); // ISO 8601, всегда UTC, с Z
 }
 
-// Middleware для проверки JWT
+// Проверка jwt
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; 
@@ -153,6 +146,35 @@ const mqttClient = mqtt.connect('mqtt://213.171.15.35:1883', {
 
 const latestData = new Map();
 
+// --- BUFFERS FOR HOURLY AVERAGE ---
+const hourlyBuffer = {};
+
+// --- HOURLY AVERAGE LOGIC ---
+function getHourStart(date) {
+  // YYYY-MM-DD HH:00:00
+  return date.toISOString().slice(0, 13) + ':00:00';
+}
+
+function addToHourlyBuffer(deviceId, sensorType, value, timestamp) {
+  const date = new Date(timestamp.replace(' ', 'T'));
+  const hourStart = getHourStart(date);
+  if (!hourlyBuffer[deviceId]) hourlyBuffer[deviceId] = {};
+  if (!hourlyBuffer[deviceId][sensorType] || hourlyBuffer[deviceId][sensorType].hourStart !== hourStart) {
+    // Если наступил новый час — сбрасываем, сохраняем среднее за прошлый час
+    if (hourlyBuffer[deviceId][sensorType] && hourlyBuffer[deviceId][sensorType].values.length > 0) {
+      const prevHour = hourlyBuffer[deviceId][sensorType].hourStart;
+      const values = hourlyBuffer[deviceId][sensorType].values;
+      const avg = values.reduce((a, b) => a + b, 0) / values.length;
+      const roundedAvg = Math.round(avg * 10) / 10; // округление до 1 знака
+      insertQueue.push({ table: sensorType, deviceId, value: roundedAvg, timestamp: prevHour });
+      processInsertQueue();
+    }
+    // Новый час — новый массив
+    hourlyBuffer[deviceId][sensorType] = { hourStart, values: [] };
+  }
+  hourlyBuffer[deviceId][sensorType].values.push(value);
+}
+
 mqttClient.on('connect', () => {
   mqttClient.subscribe(['aquaponics/+/humidity', 'aquaponics/+/light', 'aquaponics/+/water', 'aquaponics/+/VklSvet'], (err) => {
     if (err) {
@@ -163,10 +185,6 @@ mqttClient.on('connect', () => {
 
 mqttClient.on('message', (topic, message) => {
   const messageStr = message.toString('utf8').trim(); // Явно указываем кодировку UTF-8 и удаляем пробелы
-  //console.log(`Raw message received on topic ${topic}: "${messageStr}"`);
-  
-  // Выводим коды символов для отладки
-  //console.log(`Character codes: ${[...messageStr].map(c => c.charCodeAt(0)).join(', ')}`);
 
   const topicParts = topic.split('/');
   if (topicParts.length !== 3) {
@@ -176,14 +194,12 @@ mqttClient.on('message', (topic, message) => {
   const deviceId = topicParts[1];
   const sensorType = topicParts[2];
 
-  // Обработка water (1 или 0)
   if (sensorType === 'water') {
-    const waterLevel = messageStr === '1' ? 1 : 0;
+    const waterValue = parseInt(messageStr.replace(/\D/g, ''));
+    const waterLevel = waterValue === 1 ? 1 : 0;
     
-    // Логируем уровень воды
-    console.log(`Received water level from device ${deviceId}: ${waterLevel}`);
+    console.log(`Received water_level from device ${deviceId}: ${waterLevel}`);
     
-    // Обновляем последние значения
     if (!latestData.has(deviceId)) {
       latestData.set(deviceId, { humidity: 0, light: 0, water: 0 });
     }
@@ -242,8 +258,6 @@ mqttClient.on('message', (topic, message) => {
     return;
   }
 
-  //console.log(`Получено значение на тему ${topic}: ${value}`);
-
   // Проверяем, существует ли устройство
   db.get('SELECT 1 FROM devices WHERE device_id = ?', [deviceId], (err, row) => {
     if (err) {
@@ -264,18 +278,17 @@ mqttClient.on('message', (topic, message) => {
     }
     const deviceData = latestData.get(deviceId);
 
-    // Получаем локальное время EEST
+    // Получаем локальное время
     const timestamp = getLocalTimestamp();
 
-    // Добавляем в очередь вставку
+    // Добавляем в hourlyBuffer вместо insertQueue
     if (sensorType === 'humidity') {
       deviceData.humidity = value;
-      insertQueue.push({ table: 'humidity', deviceId, value, timestamp });
+      addToHourlyBuffer(deviceId, 'humidity', value, timestamp);
     } else if (sensorType === 'light') {
       deviceData.light = value;
-      insertQueue.push({ table: 'light', deviceId, value, timestamp });
+      addToHourlyBuffer(deviceId, 'light', value, timestamp);
     }
-    processInsertQueue();
   });
 });
 
@@ -423,16 +436,6 @@ app.get('/data/light', authenticateToken, (req, res) => {
   );
 });
 
-// API для получения списка устройств (в будующем, если у одного пользователя несколько устройств)
-app.get('/devices', authenticateToken, (req, res) => {
-  db.all('SELECT device_id FROM devices WHERE device_id = ?', [req.user.device_id], (err, rows) => {
-    if (err) {
-      console.error(`SQLite select error (devices): ${err.message}`);
-      return res.status(500).json({ error: 'Database error' });
-    }
-    res.json({ devices: rows.map(row => row.device_id) });
-  });
-});
 
 app.get('/user/device', authenticateToken, (req, res) => {
   // извлечение device_id
@@ -447,18 +450,6 @@ const server = app.listen(3000, '0.0.0.0', () => {
 // мягкое отключение сервера
 process.on('SIGTERM', () => {
   console.log('Received SIGTERM. Shutting down gracefully...');
-  server.close(() => {
-    db.close((err) => {
-      if (err) console.error(`Error closing SQLite: ${err.message}`);
-      mqttClient.end();
-      console.log('Server stopped');
-      process.exit(0);
-    });
-  });
-});
-
-process.on('SIGINT', () => {
-  console.log('Received SIGINT. Shutting down gracefully...');
   server.close(() => {
     db.close((err) => {
       if (err) console.error(`Error closing SQLite: ${err.message}`);
