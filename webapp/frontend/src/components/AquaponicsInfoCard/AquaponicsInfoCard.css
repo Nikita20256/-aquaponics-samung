@@ -1,208 +1,220 @@
+/* AquaponicsInfoCard.css */
 .aquaponics-card {
-    display: flex;
-    flex-direction: column;
-    background: linear-gradient(135deg, #0F2925 0%, #1a4314 100%);
-    border-radius: 16px;
-    padding: 20px;
-    width: 330px;
-    height: 760px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-    color: #fff;
-    border: 1px solid rgba(245, 215, 66, 0.3);
-    transition: all 0.3s ease;
-  }
-  
-  .device-image-container {
-    height: 200px;
-    margin: 0 auto 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 10px;
-    background: 
-      radial-gradient(
-        circle at center,
-        rgba(245, 215, 66, 0.1) 0%,
-        rgba(15, 41, 37, 0.5) 70%
-      );
-    width: 90%;
-    position: relative;
-    box-shadow:
-      inset 0 0 15px rgba(245, 215, 66, 0.2),
-      0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid rgba(245, 215, 66, 0.2);
-  }
-  
-  
-  .device-info-section h3 {
-    margin: 5px 0;
-    font-size: 1.3rem;
-    text-align: center;
-    color: #f5d742;
-  }
-  
-  .status-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 8px;
-    font-size: 0.9rem;
-  }
-  
-  .fact-section {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    margin-top: 15px;
-  }
-  
-  .fact-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 12px;
-  }
-  
-  .fact-header h4 {
-    margin: 0;
-    color: #f5d742;
-    font-size: 1.2rem;
-  }
-  
-  .icons-row {
-    display: flex;
-    gap: 12px;
-  }
-  
-  .icon {
-    font-size: 1.8rem;
-    transition: transform 0.3s ease;
-  }
-  
-  .fact-content {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    background: rgba(0,0,0,0.2);
-    border-radius: 10px;
-    border: 1px solid rgba(255,255,255,0.1);
-   
-  }
-  
-  .fact-content p {
+  width: 290px;
+  height: 340px;
+  background: rgba(18, 24, 38, 0.9);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), 
+              0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  position: relative;
+}
 
-    line-height: 1.3;
-    font-size: 1.5rem;
-    text-align: start;
-    margin-left: 5px;
+.aquaponics-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, transparent, 
+              rgba(16, 185, 129, 0.2), transparent, transparent);
+  z-index: -1;
+  border-radius: 22px;
+  animation: borderGlow 3s linear infinite;
+}
+
+.aquaponics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4), 
+              0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.card-header {
+  padding: 22px 24px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.15);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  position: relative;
+}
+
+.card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+              transparent, 
+              rgba(16, 185, 129, 0.5), 
+              transparent);
+}
+
+.device-id {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #10b981;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.fact-container {
+  padding: 24px;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.fact-content {
+  position: relative;
+  padding: 20px;
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.fact-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-weight: 500;
+  text-align: center;
+}
+
+.fact-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fact-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+  gap: 20px;
+}
+
+.icon {
+  font-size: 28px;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
+}
+
+.icon:hover {
+  transform: scale(1.2) rotate(5deg);
+  opacity: 1;
+}
+
+.watermark {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 36px;
+  opacity: 0.1;
+  filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.3));
+}
+
+.card-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid rgba(16, 185, 129, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.progress-container {
+  width: 70%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  border-radius: 3px;
+  animation: progressAnimation 15s linear forwards;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.next-fact {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+}
+
+@keyframes progressAnimation {
+  0% { 
+    width: 100%;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
   }
-  
-  /* Анимации и медиа-запросы остаются без изменений */
-  .device-image-container {
-    height: 200px;
-    margin: 0 auto 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    border-radius: 10px;
-    background: 
-      radial-gradient(
-        circle at center,
-        rgba(245, 215, 66, 0.1) 0%,
-        rgba(15, 41, 37, 0.5) 70%
-      );
+  100% { 
+    width: 0%;
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.3);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.3;
+  }
+}
+
+/* Анимация появления карточки */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.aquaponics-card {
+  animation: cardEntrance 0.6s ease-out;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+  .aquaponics-card {
     width: 90%;
-    position: relative;
-    box-shadow:
-      inset 0 0 15px rgba(245, 215, 66, 0.2),
-      0 4px 10px rgba(0, 0, 0, 0.2);
-    transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-    border: 1px solid rgba(245, 215, 66, 0.2);
+    max-width: 320px;
+    height: auto;
+    min-height: 340px;
   }
   
-  .device-image {
-    max-height: 200px;
-    max-width: 200px;
-    object-fit: contain;
-    filter: 
-      drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))
-      brightness(1.05);
-    transform: scale(0.98);
-    transition: 
-      transform 0.5s ease,
-      filter 0.5s ease;
-    position: relative;
-    z-index: 2;
+  .fact-container {
+    min-height: 200px;
   }
-  
-  .device-image-container:hover {
-    background:
-      radial-gradient(
-        circle at center,
-        rgba(245, 215, 66, 0.2) 0%,
-        rgba(15, 41, 37, 0.6) 70%
-      );
-    box-shadow:
-      inset 0 0 20px rgba(245, 215, 66, 0.3),
-      0 6px 15px rgba(0, 0, 0, 0.3);
-  }
-  
-  .device-image-container:hover .device-image {
-    transform: scale(1.02);
-    filter:
-      drop-shadow(0 3px 6px rgba(0, 0, 0, 0.4))
-      brightness(1.1);
-  }
-  
-  /* Эффект светового кольца */
-  .device-image-container::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 180px;
-    height: 180px;
-    border-radius: 50%;
-    background: radial-gradient(
-      circle,
-      rgba(245, 215, 66, 0.15) 0%,
-      transparent 70%
-    );
-    z-index: 1;
-    opacity: 0.7;
-    transition: all 0.5s ease;
-  }
-  
-  .device-image-container:hover::after {
-    width: 200px;
-    height: 200px;
-    opacity: 0.9;
-  }
-  
-  /* Анимация пульсации */
-  @keyframes subtlePulse {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.03); }
-    100% { transform: translate(-50%, -50%) scale(1); }
-  }
-  
-  .device-image-container::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 190px;
-    height: 190px;
-    border-radius: 50%;
-    border: 2px solid rgba(245, 215, 66, 0.1);
-    z-index: 0;
-    animation: subtlePulse 4s infinite ease-in-out;
-    pointer-events: none;
-  }
+}
+

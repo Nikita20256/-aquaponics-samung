@@ -1,120 +1,159 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './Temperature.css';
 
-const Temperature = ({ waterLevel }) => {
-  const waterRef = useRef(null);
-  const [bubbleCount, setBubbleCount] = useState(0);
+const Temperature = ({ temperature }) => {
+  const mercuryRef = useRef(null);
+  const [pulse, setPulse] = useState(false);
 
   const colors = {
-    water: '#5D9CEC',
-    waterSurface: '#7AB3FF',
+    hot: '#FF6B6B',
+    warm: '#FFA726',
+    ideal: '#8ED7C6',
+    cool: '#48BFE3',
+    cold: '#5D9CEC',
+    mercury: 'linear-gradient(to top, #FF6B6B, #FFA726, #8ED7C6, #48BFE3, #5D9CEC)',
     glass: 'rgba(255, 255, 255, 0.2)',
-    glassBorder: '#E2E8F0',
-    bubble: 'rgba(255, 255, 255, 0.4)',
-    emptyTank: '#F7FAFC'
+    glassBorder: 'rgba(255, 255, 255, 0.3)',
+    cardBackground: 'linear-gradient(135deg, #E8F5E9 0%, #F1F8E9 100%)' // Бледный зеленый градиент
+  };
+
+  const getTemperatureStatus = (temp) => {
+    if (temp === null) return 'nodata';
+    if (temp >= 30) return 'hot';
+    if (temp >= 25) return 'warm';
+    if (temp >= 20) return 'ideal';
+    if (temp >= 15) return 'cool';
+    return 'cold';
   };
 
   const statusConfig = {
     nodata: { 
       message: 'Данные отсутствуют', 
       color: '#EDF2F7', 
-      text: '#4A5568' 
+      text: '#4A5568',
+      icon: '❓'
     },
-    nowater: {
-      message: 'Воды мало!',
+    hot: {
+      message: 'Слишком жарко!',
       color: '#FFF5F5',
       text: '#C53030',
+      icon: '🔥',
       animation: 'pulse 1.5s infinite'
     },
-    normal: { 
-      message: 'Водаы достаточно', 
+    warm: {
+      message: 'Тепло',
+      color: '#FFFBEB',
+      text: '#D97706',
+      icon: '☀️'
+    },
+    ideal: { 
+      message: 'Идеальная температура', 
       color: '#F0FFF4', 
-      text: '#2F855A' 
+      text: '#2F855A',
+      icon: '✅'
+    },
+    cool: {
+      message: 'Прохладно',
+      color: '#EFF6FF',
+      text: '#1E40AF',
+      icon: '💧'
+    },
+    cold: {
+      message: 'Слишком холодно!',
+      color: '#EFF6FF',
+      text: '#1E40AF',
+      icon: '❄️',
+      animation: 'pulse 1.5s infinite'
     }
   };
 
-  const status = waterLevel === 1 ? 'normal' : waterLevel === 0 ? 'nowater' : 'nodata';
+  const status = getTemperatureStatus(temperature);
 
   useEffect(() => {
-    if (!waterRef.current || waterLevel !== 1) return;
-
-    const container = waterRef.current;
-    const createBubble = () => {
-      const bubble = document.createElement('div');
-      bubble.className = 'water-bubble';
-
-      const size = Math.random() * 10 + 5;
-      const left = Math.random() * 80 + 10;
-      const delay = Math.random() * 3;
-
-      bubble.style.cssText = `
-        width: ${size}px;
-        height: ${size}px;
-        left: ${left}%;
-        bottom: 0;
-        animation-delay: ${delay}s;
-        opacity: ${Math.random() * 0.5 + 0.3};
-      `;
-
-      container.appendChild(bubble);
-      setBubbleCount(prev => prev + 1);
-
-      setTimeout(() => {
-        bubble.remove();
-      }, 3000);
-    };
-
-    const bubbleInterval = setInterval(createBubble, 800);
-    return () => clearInterval(bubbleInterval);
-  }, [waterLevel]);
+    if (mercuryRef.current && temperature !== null) {
+      const normalizedTemp = Math.max(10, Math.min(35, temperature));
+      const height = ((normalizedTemp - 10) / 25) * 100;
+      
+      mercuryRef.current.style.height = `${height}%`;
+      setPulse(status === 'hot' || status === 'cold');
+    }
+  }, [temperature, status]);
 
   return (
-    <div className="water-card">
-      <div className="water-header">
-        <h2 className="water-title">
-          <span className="icon">💧</span>Вода в аквапонике
+    <div 
+      className="temperature-card"
+      style={{ background: colors.cardBackground }}
+    >
+      <div className="temperature-header">
+        <h2 className="temperature-title">
+          <span className="icon">🌡️</span>Температура среды
         </h2>
       </div>
 
-      <div className="water-display-container">
-        {waterLevel === 1 ? (
-          <div className="water-tank">
-            <div className="glass-container" ref={waterRef}>
-              {/* Стеклянный резервуар */}
-              <div className="glass">
-                {/* Вода */}
+      <div className="temperature-display-container">
+        <div className="thermometer-wrapper">
+          <div className="thermometer">
+            <div className="thermometer-bulb">
+              <div className="thermometer-bulb-inner"></div>
+            </div>
+            
+            <div className="thermometer-tube">
+              <div className="thermometer-mercury-container">
                 <div 
-                  className="water-fill" 
+                  ref={mercuryRef} 
+                  className={`thermometer-mercury ${pulse ? 'pulse' : ''}`}
                   style={{
-                    background: `linear-gradient(to bottom, ${colors.waterSurface}, ${colors.water})`,
+                    background: colors.mercury
                   }}
+                ></div>
+              </div>
+              
+              {/* Горизонтальные линии шкалы */}
+              {[0, 20, 40, 60, 80, 100].map((position) => (
+                <div 
+                  key={position}
+                  className="scale-line" 
+                  style={{ bottom: `${position}%` }}
+                ></div>
+              ))}
+            </div>
+            
+            <div className="thermometer-scale">
+              {[
+                { value: 35, position: 100 },
+                { value: 30, position: 80 },
+                { value: 25, position: 60 },
+                { value: 20, position: 40 },
+                { value: 15, position: 20 },
+                { value: 10, position: 0 }
+              ].map((mark) => (
+                <div 
+                  key={mark.value}
+                  className="scale-mark" 
+                  style={{ bottom: `calc(${mark.position}% - 5px)` }}
                 >
-                  {/* Блеск на поверхности воды */}
-                  <div className="water-shine"></div>
+                  {mark.value}°
                 </div>
-                
-                {/* Полоски на стекле */}
-                <div className="glass-stripes">
-                  {[...Array(10)].map((_, i) => (
-                    <div key={i} className="glass-stripe"></div>
-                  ))}
-                </div>
-              </div> 
+              ))}
             </div>
           </div>
-        ) : (
-          <div className="empty-tank-visual">
-            <div className="glass-container">
-              <div className="glass empty">
-                {waterLevel === null && <div className="no-data-icon">❓</div>}
-              </div> 
+
+          {temperature !== null && (
+            <div className="current-temperature">
+              <span className="temperature-value">{temperature}°C</span>
             </div>
-           
+          )}
+        </div>
+
+        {temperature === null && (
+          <div className="no-data-indicator">
+            <div className="no-data-icon">❓</div>
+            <p>Нет данных о температуре</p>
           </div>
         )}
       </div>
 
-      <div className="water-footer">
+      <div className="temperature-footer">
         <div 
           className="status-message"
           style={{
@@ -123,6 +162,7 @@ const Temperature = ({ waterLevel }) => {
             animation: statusConfig[status]?.animation
           }}
         >
+          <span className="status-icon">{statusConfig[status].icon}</span>
           {statusConfig[status].message}
         </div>
       </div>

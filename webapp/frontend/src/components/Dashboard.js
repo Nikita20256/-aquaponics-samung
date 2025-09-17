@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import Temperature from './Temperature/temperature';
+import WaterLevel from './WaterLevel/WaterLevel';
 import Humidity from './Humidity/Humidity';
 import LightIntensity from './LightIntensity/LightIntensity';
 import SensorChart from './SensorChart/SensorChart';
 import AquaponicsInfoCard from './AquaponicsInfoCard/AquaponicsInfoCard';
 import './Dashboard.css';
+import Temperature from './Temperature/Temperature';
 
 const LoadingSpinner = () => (
   <div className="loading-spinner">
@@ -223,6 +224,7 @@ function Dashboard() {
         <div className="dashboard-cont"> 
           <div className="sensors-grid">
             <div className="sensors-cards">
+              <WaterLevel waterLevel={sensorData.waterLevel}/>
               <Temperature waterLevel={sensorData.waterLevel}/>
               <Humidity humidity={sensorData.humidity}/>
               <LightIntensity 
@@ -230,17 +232,17 @@ function Dashboard() {
                 lightSwitches={sensorData.lightSwitches}
               />
             </div>
+            <div className="dashboard-SensorChart">
             {historicalData && (
               <SensorChart 
                 historicalData={historicalData}
                 startDate={timeRange.startDate}
                 endDate={timeRange.endDate}
                 onTimeRangeChange={handleTimeRangeChange}
-                deviceId={deviceId}
-              />
-            )}
-          </div>
-          <AquaponicsInfoCard deviceId={deviceId} />
+                deviceId={deviceId}/>)}
+            <AquaponicsInfoCard deviceId={deviceId} />
+            </div>
+          </div> 
         </div> 
       </div>
     </div>
