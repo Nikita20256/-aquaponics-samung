@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Navbar from './components/Navbar';
 import Login from './components/Login';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/Dashboard/Dashboard';
 import Plants from './components/Plants';
 import HomePage from './components/HomePage'; // Перенесли в components
 import './styles/fonts.css';

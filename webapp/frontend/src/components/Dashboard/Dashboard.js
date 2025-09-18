@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
-import WaterLevel from './WaterLevel/WaterLevel';
-import Humidity from './Humidity/Humidity';
-import LightIntensity from './LightIntensity/LightIntensity';
-import SensorChart from './SensorChart/SensorChart';
-import AquaponicsInfoCard from './AquaponicsInfoCard/AquaponicsInfoCard';
+import WaterLevel from '../WaterLevel/WaterLevel';
+import Humidity from '../Humidity/Humidity';
+import LightIntensity from '../LightIntensity/LightIntensity';
+import SensorChart from '../SensorChart/SensorChart';
+import AquaponicsInfoCard from '../AquaponicsInfoCard/AquaponicsInfoCard';
 import './Dashboard.css';
-import Temperature from './Temperature/Temperature';
+import Temperature from '../Temperature/Temperature';
 
 const LoadingSpinner = () => (
   <div className="loading-spinner">
