@@ -27,7 +27,7 @@ const DEVICES = [
     login: 'device2',
     password: '456',
   },
-];
+]; // Пример устройств
 
 // SQLite подключение
 const db = new sqlite3.Database('aquaponics.db', sqlite3.OPEN_READWRITE | sqlite3.OPEN_CREATE, (err) => {
@@ -60,6 +60,15 @@ db.serialize(async () => {
   `);
   db.run(`
     CREATE TABLE IF NOT EXISTS light (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      device_id TEXT NOT NULL,
+      value REAL NOT NULL,
+      timestamp TEXT NOT NULL,
+      FOREIGN KEY (device_id) REFERENCES devices(device_id)
+    )
+  `);
+  db.run(`
+    CREATE TABLE IF NOT EXISTS temperature (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       device_id TEXT NOT NULL,
       value REAL NOT NULL,
@@ -116,10 +125,17 @@ async function processInsertQueue() {
 
 // Форматирование времени для занесения в базу
 function getLocalTimestamp() {
-  return new Date().toISOString(); // ISO 8601, всегда UTC, с Z
+  const now = new Date();
+  const year = now.getFullYear();
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const day = String(now.getDate()).padStart(2, '0');
+  const hours = String(now.getHours()).padStart(2, '0');
+  const minutes = String(now.getMinutes()).padStart(2, '0');
+  const seconds = String(now.getSeconds()).padStart(2, '0');
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`; // Формат: 2025-05-14 22:39:37
 }
 
-// Проверка jwt
+// Middleware для проверки JWT
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1]; 
@@ -138,45 +154,15 @@ function authenticateToken(req, res, next) {
 }
 
 // MQTT подключение
-const mqttClient = mqtt.connect('mqtt://213.171.15.35:1883', {
-  reconnectPeriod: 1000,
-  username: "device1", //логин для mqtt
-  password: "aqua" //пароль для mqtt
+const mqttClient = mqtt.connect('mqtt://147.45.102.173:1883', {
+  reconnectPeriod: 1000
 });
 
 const latestData = new Map();
-
-// --- BUFFERS FOR HOURLY AVERAGE ---
-const hourlyBuffer = {};
-
-// --- HOURLY AVERAGE LOGIC ---
-function getHourStart(date) {
-  // YYYY-MM-DD HH:00:00
-  return date.toISOString().slice(0, 13) + ':00:00';
-}
-
-function addToHourlyBuffer(deviceId, sensorType, value, timestamp) {
-  const date = new Date(timestamp.replace(' ', 'T'));
-  const hourStart = getHourStart(date);
-  if (!hourlyBuffer[deviceId]) hourlyBuffer[deviceId] = {};
-  if (!hourlyBuffer[deviceId][sensorType] || hourlyBuffer[deviceId][sensorType].hourStart !== hourStart) {
-    // Если наступил новый час — сбрасываем, сохраняем среднее за прошлый час
-    if (hourlyBuffer[deviceId][sensorType] && hourlyBuffer[deviceId][sensorType].values.length > 0) {
-      const prevHour = hourlyBuffer[deviceId][sensorType].hourStart;
-      const values = hourlyBuffer[deviceId][sensorType].values;
-      const avg = values.reduce((a, b) => a + b, 0) / values.length;
-      const roundedAvg = Math.round(avg * 10) / 10; // округление до 1 знака
-      insertQueue.push({ table: sensorType, deviceId, value: roundedAvg, timestamp: prevHour });
-      processInsertQueue();
-    }
-    // Новый час — новый массив
-    hourlyBuffer[deviceId][sensorType] = { hourStart, values: [] };
-  }
-  hourlyBuffer[deviceId][sensorType].values.push(value);
-}
+const controlModes = new Map(); // { [deviceId]: { light: 'auto'|'on'|'off', aeration: 'auto'|'on'|'off' } }
 
 mqttClient.on('connect', () => {
-  mqttClient.subscribe(['aquaponics/+/humidity', 'aquaponics/+/light', 'aquaponics/+/water', 'aquaponics/+/VklSvet'], (err) => {
+  mqttClient.subscribe(['aquaponics/+/humidity', 'aquaponics/+/light', 'aquaponics/+/temperature', 'aquaponics/+/water', 'aquaponics/+/VklSvet'], (err) => {
     if (err) {
       console.error(`MQTT subscribe error: ${err.message}`);
     }
@@ -185,6 +171,10 @@ mqttClient.on('connect', () => {
 
 mqttClient.on('message', (topic, message) => {
   const messageStr = message.toString('utf8').trim(); // Явно указываем кодировку UTF-8 и удаляем пробелы
+  //console.log(`Raw message received on topic ${topic}: "${messageStr}"`);
+  
+  // Выводим коды символов для отладки
+  //console.log(`Character codes: ${[...messageStr].map(c => c.charCodeAt(0)).join(', ')}`);
 
   const topicParts = topic.split('/');
   if (topicParts.length !== 3) {
@@ -194,14 +184,16 @@ mqttClient.on('message', (topic, message) => {
   const deviceId = topicParts[1];
   const sensorType = topicParts[2];
 
+  // Обработка water (1 или 0)
   if (sensorType === 'water') {
-    const waterValue = parseInt(messageStr.replace(/\D/g, ''));
-    const waterLevel = waterValue === 1 ? 1 : 0;
+    const waterLevel = messageStr === '1' ? 1 : 0;
     
-    console.log(`Received water_level from device ${deviceId}: ${waterLevel}`);
+    // Логируем уровень воды
+    console.log(`Received water level from device ${deviceId}: ${waterLevel}`);
     
+    // Обновляем последние значения
     if (!latestData.has(deviceId)) {
-      latestData.set(deviceId, { humidity: 0, light: 0, water: 0 });
+      latestData.set(deviceId, { humidity: 0, light: 0, temperature: 0, water: 0 });
     }
     latestData.get(deviceId).water = waterLevel;
     return;
@@ -258,6 +250,8 @@ mqttClient.on('message', (topic, message) => {
     return;
   }
 
+  //console.log(`Получено значение на тему ${topic}: ${value}`);
+
   // Проверяем, существует ли устройство
   db.get('SELECT 1 FROM devices WHERE device_id = ?', [deviceId], (err, row) => {
     if (err) {
@@ -274,21 +268,25 @@ mqttClient.on('message', (topic, message) => {
 
     // Обновляем последние значения
     if (!latestData.has(deviceId)) {
-      latestData.set(deviceId, { humidity: 0, light: 0, water: 0 });
+      latestData.set(deviceId, { humidity: 0, light: 0, temperature: 0, water: 0 });
     }
     const deviceData = latestData.get(deviceId);
 
-    // Получаем локальное время
+    // Получаем локальное время EEST
     const timestamp = getLocalTimestamp();
 
-    // Добавляем в hourlyBuffer вместо insertQueue
+    // Добавляем в очередь вставку
     if (sensorType === 'humidity') {
       deviceData.humidity = value;
-      addToHourlyBuffer(deviceId, 'humidity', value, timestamp);
+      insertQueue.push({ table: 'humidity', deviceId, value, timestamp });
     } else if (sensorType === 'light') {
       deviceData.light = value;
-      addToHourlyBuffer(deviceId, 'light', value, timestamp);
+      insertQueue.push({ table: 'light', deviceId, value, timestamp });
+    } else if (sensorType === 'temperature') {
+      deviceData.temperature = value;
+      insertQueue.push({ table: 'temperature', deviceId, value, timestamp });
     }
+    processInsertQueue();
   });
 });
 
@@ -351,6 +349,18 @@ app.get('/lightlevel', authenticateToken, (req, res) => {
   res.json({ light: latestData.get(deviceId).light });
 });
 
+// Текущая температура
+app.get('/temperature', authenticateToken, (req, res) => {
+  const deviceId = req.query.device_id;
+  if (!deviceId || deviceId !== req.user.device_id) {
+    return res.status(403).json({ error: 'Unauthorized device access' });
+  }
+  if (!latestData.has(deviceId)) {
+    return res.status(404).json({ error: 'Device not found' });
+  }
+  res.json({ temperature: latestData.get(deviceId).temperature });
+});
+
 // API для получения статуса воды
 app.get('/waterlevel', authenticateToken, (req, res) => {
   const deviceId = req.query.device_id;
@@ -361,6 +371,66 @@ app.get('/waterlevel', authenticateToken, (req, res) => {
     return res.status(404).json({ error: 'Device not found' });
   }
   res.json({ water: latestData.get(deviceId).water || 0 });
+});
+
+// Управление режимами света и аэрации
+function validateMode(mode) {
+  return mode === 'auto' || mode === 'on' || mode === 'off';
+}
+
+function getDeviceModes(deviceId) {
+  if (!controlModes.has(deviceId)) {
+    controlModes.set(deviceId, { light: 'auto', aeration: 'auto' });
+  }
+  return controlModes.get(deviceId);
+}
+
+function publishControl(deviceId, target, mode) {
+  const topic = `aquaponics/${deviceId}/control/${target}`; // e.g. aquaponics/dev1/control/light
+  const payload = mode; // 'auto' | 'on' | 'off'
+  mqttClient.publish(topic, payload, { qos: 1, retain: true });
+}
+
+// GET текущие режимы
+app.get('/control/modes', authenticateToken, (req, res) => {
+  const deviceId = req.query.device_id;
+  if (!deviceId || deviceId !== req.user.device_id) {
+    return res.status(403).json({ error: 'Unauthorized device access' });
+  }
+  const modes = getDeviceModes(deviceId);
+  res.json(modes);
+});
+
+// SET режим света
+app.post('/control/light', authenticateToken, (req, res) => {
+  const deviceId = req.query.device_id;
+  const { mode } = req.body;
+  if (!deviceId || deviceId !== req.user.device_id) {
+    return res.status(403).json({ error: 'Unauthorized device access' });
+  }
+  if (!validateMode(mode)) {
+    return res.status(400).json({ error: 'Invalid mode. Use auto|on|off' });
+  }
+  const modes = getDeviceModes(deviceId);
+  modes.light = mode;
+  publishControl(deviceId, 'light', mode);
+  res.json({ ok: true, modes });
+});
+
+// SET режим аэрации
+app.post('/control/aeration', authenticateToken, (req, res) => {
+  const deviceId = req.query.device_id;
+  const { mode } = req.body;
+  if (!deviceId || deviceId !== req.user.device_id) {
+    return res.status(403).json({ error: 'Unauthorized device access' });
+  }
+  if (!validateMode(mode)) {
+    return res.status(400).json({ error: 'Invalid mode. Use auto|on|off' });
+  }
+  const modes = getDeviceModes(deviceId);
+  modes.aeration = mode;
+  publishControl(deviceId, 'aeration', mode);
+  res.json({ ok: true, modes });
 });
 
 // API для получения счетчика включений света
@@ -436,6 +506,43 @@ app.get('/data/light', authenticateToken, (req, res) => {
   );
 });
 
+// История температуры
+app.get('/data/temperature', authenticateToken, (req, res) => {
+  const { device_id, start, end, limit, timezone } = req.query;
+  if (!device_id || device_id !== req.user.device_id) {
+    return res.status(403).json({ error: 'Unauthorized device access' });
+  }
+  const queryLimit = parseInt(limit) || 100;
+  const startTime = start ? start : new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString().slice(0, 19).replace('T', ' ');
+  const endTime = end ? end : new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+  const format = timezone === 'utc' ? `strftime('%Y-%m-%d %H:%M:%S', datetime(timestamp, '-3 hours'))` : `timestamp`;
+  db.all(
+    `SELECT value, ${format} as timestamp 
+     FROM temperature 
+     WHERE device_id = ? AND timestamp BETWEEN ? AND ? 
+     ORDER BY timestamp ASC LIMIT ?`,
+    [device_id, startTime, endTime, queryLimit],
+    (err, rows) => {
+      if (err) {
+        console.error(`SQLite select error (temperature): ${err.message}`);
+        return res.status(500).json({ error: 'Database error' });
+      }
+      res.json(rows);
+    }
+  );
+});
+
+// API для получения списка устройств (в будующем, если у одного пользователя несколько устройств)
+app.get('/devices', authenticateToken, (req, res) => {
+  db.all('SELECT device_id FROM devices WHERE device_id = ?', [req.user.device_id], (err, rows) => {
+    if (err) {
+      console.error(`SQLite select error (devices): ${err.message}`);
+      return res.status(500).json({ error: 'Database error' });
+    }
+    res.json({ devices: rows.map(row => row.device_id) });
+  });
+});
 
 app.get('/user/device', authenticateToken, (req, res) => {
   // извлечение device_id
@@ -450,6 +557,18 @@ const server = app.listen(3000, '0.0.0.0', () => {
 // мягкое отключение сервера
 process.on('SIGTERM', () => {
   console.log('Received SIGTERM. Shutting down gracefully...');
+  server.close(() => {
+    db.close((err) => {
+      if (err) console.error(`Error closing SQLite: ${err.message}`);
+      mqttClient.end();
+      console.log('Server stopped');
+      process.exit(0);
+    });
+  });
+});
+
+process.on('SIGINT', () => {
+  console.log('Received SIGINT. Shutting down gracefully...');
   server.close(() => {
     db.close((err) => {
       if (err) console.error(`Error closing SQLite: ${err.message}`);
