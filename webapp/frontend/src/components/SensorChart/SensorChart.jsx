@@ -49,7 +49,7 @@ const SensorChart = ({ historicalData, startDate, endDate, onTimeRangeChange }) 
     }
   };
 
-  // Подготовка данных для графика (только влажность и свет)
+  // Подготовка данных для графика (влажность, свет и температура)
   const chartData = {
     labels: historicalData?.humidity?.map(item => item.timestamp.replace(' ', 'T') + 'Z') || [],
     datasets: [
@@ -67,6 +67,15 @@ const SensorChart = ({ historicalData, startDate, endDate, onTimeRangeChange }) 
         data: historicalData?.light?.map(item => item.value) || [],
         borderColor: 'rgb(255, 206, 86)',
         backgroundColor: 'rgba(255, 206, 86, 0.5)',
+        tension: 0.1,
+        borderWidth: 2,
+        pointRadius: 3
+      },
+      {
+        label: 'Temperature (°C)',
+        data: historicalData?.temperature?.map(item => item.value) || [],
+        borderColor: 'rgb(255, 99, 132)',
+        backgroundColor: 'rgba(255, 99, 132, 0.5)',
         tension: 0.1,
         borderWidth: 2,
         pointRadius: 3

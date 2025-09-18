@@ -33,8 +33,10 @@ const API_CONFIG = {
     waterLevel: '/waterlevel',
     currentHumid: '/humidity',
     currentLight: '/lightlevel',
+    currentTemp: '/temperature',
     historicalHumid: '/data/humidity',
     historicalLight: '/data/light',
+    historicalTemp: '/data/temperature',
     lightSwitches: '/lightswitches'
   }
 };
@@ -44,6 +46,7 @@ function Dashboard() {
     waterLevel: null,
     humidity: null,
     light: null,
+    temperature: null,
     lightSwitches: null
   });
   const [deviceId, setDeviceId] = useState(null);
@@ -87,7 +90,7 @@ function Dashboard() {
     if (!deviceId) return;
 
     try {
-      const [waterRes, humRes, lightRes, switchesRes] = await Promise.all([
+      const [waterRes, humRes, lightRes, tempRes, switchesRes] = await Promise.all([
         axios.get(API_CONFIG.endpoints.waterLevel, {
           baseURL: API_CONFIG.baseURL,
           params: { device_id: deviceId },
@@ -109,6 +112,13 @@ function Dashboard() {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
         }),
+        axios.get(API_CONFIG.endpoints.currentTemp, {
+          baseURL: API_CONFIG.baseURL,
+          params: { device_id: deviceId },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
+        }),
         axios.get(API_CONFIG.endpoints.lightSwitches, {
           baseURL: API_CONFIG.baseURL,
           params: { device_id: deviceId },
@@ -122,6 +132,7 @@ function Dashboard() {
         waterLevel: waterRes.data?.water ?? null,
         humidity: humRes.data?.humidity ?? null,
         light: lightRes.data?.light ?? null,
+        temperature: tempRes.data?.temperature ?? null,
         lightSwitches: switchesRes.data?.count ?? 0
       });
     } catch (err) {
@@ -134,7 +145,7 @@ function Dashboard() {
 
     try {
       setLoading(true);
-      const [humData, lightData] = await Promise.all([
+      const [humData, lightData, tempData] = await Promise.all([
         axios.get(API_CONFIG.endpoints.historicalHumid, {
           baseURL: API_CONFIG.baseURL,
           params: {
@@ -156,12 +167,24 @@ function Dashboard() {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
+        }),
+        axios.get(API_CONFIG.endpoints.historicalTemp, {
+          baseURL: API_CONFIG.baseURL,
+          params: {
+            device_id: deviceId,
+            start: start.toISOString(),
+            end: end.toISOString()
+          },
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`
+          }
         })
       ]);
       
       setHistoricalData({
         humidity: humData.data || null,
-        light: lightData.data || null
+        light: lightData.data || null,
+        temperature: tempData.data || null
       });
     } catch (err) {
       setError(`Ошибка загрузки исторических данных`);
@@ -225,7 +248,7 @@ function Dashboard() {
           <div className="sensors-grid">
             <div className="sensors-cards">
               <WaterLevel waterLevel={sensorData.waterLevel}/>
-              <Temperature waterLevel={sensorData.waterLevel}/>
+              <Temperature temperature={sensorData.temperature}/>
               <Humidity humidity={sensorData.humidity}/>
               <LightIntensity 
                 lightLevel={sensorData.light}
