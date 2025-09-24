@@ -1,5 +1,5 @@
 .water-card {
-  background: linear-gradient(135deg, #F3FBF1 0%, #E2F4E1 100%); /* Спокойный фон */
+  background: linear-gradient(135deg, #F3FBF1 0%, #E2F4E1 100%);
   border-radius: 16px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   overflow: hidden;
@@ -8,7 +8,9 @@
   height: 100%;
   width: 270px;
   transition: all 0.4s ease;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .water-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 8px 24px rgba(85, 125, 85, 0.25);
@@ -40,12 +42,12 @@
   justify-content: center;
 }
 
-.water-tank, .empty-tank-visual, .no-data-visual {
+.water-tank, .empty-tank-visual {
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 20px;
 }
 
 .glass-container {
@@ -70,13 +72,6 @@
 
 .glass.empty {
   background: #F7FAFC;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.glass.no-data {
-  background: #EDF2F7;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -127,30 +122,58 @@
   left: 80%;
 }
 
-.water-markers {
-  position: absolute;
-  right: -30px;
-  top: 0;
-  height: 100%;
+.aeration-control {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
 }
 
-.marker {
-  font-size: 0.7rem;
-  color: #718096;
+.aeration-label {
+  font-size: 0.9rem;
+  color: #4A5568;
+  font-weight: 600;
+}
+
+.switch-selector {
   position: relative;
+  display: flex;
+  background: #F7FAFC;
+  border-radius: 12px;
+  padding: 4px;
+  width: 200px;
+  border: 1px solid #E2E8F0;
 }
 
-.marker::before {
-  content: '';
+.switch-option {
+  position: relative;
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.switch-option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.switch-slider {
   position: absolute;
-  left: -10px;
-  top: 50%;
-  width: 5px;
-  height: 1px;
-  background: #CBD5E0;
+  top: 4px;
+  left: 4px;
+  width: calc(33.333% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .water-bubble {
@@ -176,13 +199,6 @@
 
 .empty-tank-icon, .no-data-icon {
   font-size: 2rem;
-}
-
-.empty-tank-text, .no-data-text {
-  margin-top: 12px;
-  font-size: 0.9rem;
-  color: #4A5568;
-  font-weight: 500;
 }
 
 .water-footer {

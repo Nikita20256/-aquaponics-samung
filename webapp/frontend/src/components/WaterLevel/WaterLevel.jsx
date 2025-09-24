@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 import './WaterLevel.css';
 
-const WaterLevel= ({ waterLevel }) => {
+const WaterLevel = ({ waterLevel }) => {
   const waterRef = useRef(null);
   const [bubbleCount, setBubbleCount] = useState(0);
+  const [aerationMode, setAerationMode] = useState(1); // 0: off, 1: auto, 2: on
 
   const colors = {
     water: '#5D9CEC',
@@ -27,16 +28,32 @@ const WaterLevel= ({ waterLevel }) => {
       animation: 'pulse 1.5s infinite'
     },
     normal: { 
-      message: 'Водаы достаточно', 
+      message: 'Воды достаточно', 
       color: '#F0FFF4', 
       text: '#2F855A' 
     }
   };
 
+  const aerationConfig = [
+    { label: 'Выкл', value: 0, color: '#E53E3E' },
+    { label: 'Авто', value: 1, color: '#3182CE' },
+    { label: 'Вкл', value: 2, color: '#38A169' }
+  ];
+
   const status = waterLevel === 1 ? 'normal' : waterLevel === 0 ? 'nowater' : 'nodata';
+
+  // Функция для переключения режима аэрации
+  const handleAerationChange = (value) => {
+    setAerationMode(value);
+  };
 
   useEffect(() => {
     if (!waterRef.current || waterLevel !== 1) return;
+
+    // Создаем пузырьки только если аэрация включена или в авторежиме при нормальном уровне воды
+    const shouldCreateBubbles = aerationMode === 2 || (aerationMode === 1 && waterLevel === 1);
+
+    if (!shouldCreateBubbles) return;
 
     const container = waterRef.current;
     const createBubble = () => {
@@ -60,13 +77,15 @@ const WaterLevel= ({ waterLevel }) => {
       setBubbleCount(prev => prev + 1);
 
       setTimeout(() => {
-        bubble.remove();
+        if (bubble.parentNode) {
+          bubble.remove();
+        }
       }, 3000);
     };
 
     const bubbleInterval = setInterval(createBubble, 800);
     return () => clearInterval(bubbleInterval);
-  }, [waterLevel]);
+  }, [waterLevel, aerationMode]);
 
   return (
     <div className="water-card">
@@ -101,6 +120,33 @@ const WaterLevel= ({ waterLevel }) => {
                 </div>
               </div> 
             </div>
+            
+            {/* Переключатель аэрации под шкалой */}
+            <div className="aeration-control">
+              <div className="aeration-label">Аэрация</div>
+              <div className="switch-selector">
+                {aerationConfig.map((mode, index) => (
+                  <button
+                    key={mode.value}
+                    className={`switch-option ${aerationMode === mode.value ? 'active' : ''}`}
+                    onClick={() => handleAerationChange(mode.value)}
+                    style={{
+                      backgroundColor: aerationMode === mode.value ? mode.color : 'transparent',
+                      color: aerationMode === mode.value ? 'white' : '#4A5568'
+                    }}
+                  >
+                    {mode.label}
+                  </button>
+                ))}
+                <div 
+                  className="switch-slider"
+                  style={{
+                    transform: `translateX(${aerationMode * 100}%)`,
+                    backgroundColor: aerationConfig[aerationMode].color
+                  }}
+                />
+              </div>
+            </div>
           </div>
         ) : (
           <div className="empty-tank-visual">
@@ -109,23 +155,38 @@ const WaterLevel= ({ waterLevel }) => {
                 {waterLevel === null && <div className="no-data-icon">❓</div>}
               </div> 
             </div>
-           
+            
+            {/* Переключатель аэрации для пустого резервуара */}
+            <div className="aeration-control">
+              <div className="aeration-label"> Режим аэрация</div>
+              <div className="switch-selector">
+                {aerationConfig.map((mode, index) => (
+                  <button
+                    key={mode.value}
+                    className={`switch-option ${aerationMode === mode.value ? 'active' : ''}`}
+                    onClick={() => handleAerationChange(mode.value)}
+                    style={{
+                      backgroundColor: aerationMode === mode.value ? mode.color : 'transparent',
+                      color: aerationMode === mode.value ? 'white' : '#4A5568'
+                    }}
+                  >
+                    {mode.label}
+                  </button>
+                ))}
+                <div 
+                  className="switch-slider"
+                  style={{
+                    transform: `translateX(${aerationMode * 100}%)`,
+                    backgroundColor: aerationConfig[aerationMode].color
+                  }}
+                />
+              </div>
+            </div>
           </div>
         )}
       </div>
 
-      <div className="water-footer">
-        <div 
-          className="status-message"
-          style={{
-            backgroundColor: statusConfig[status].color,
-            color: statusConfig[status].text,
-            animation: statusConfig[status]?.animation
-          }}
-        >
-          {statusConfig[status].message}
-        </div>
-      </div>
+     
     </div>
   );
 };

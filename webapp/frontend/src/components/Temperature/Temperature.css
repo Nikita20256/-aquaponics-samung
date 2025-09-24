@@ -1,11 +1,11 @@
 .temperature-card {
   border-radius: 20px;
-  padding: 20px;
+  padding: 12px;
   color: #2D3748;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  height: 350px; /* Фиксированная высота */
+  height: 370px; /* Фиксированная высота */
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -178,6 +178,7 @@
 .temperature-footer {
   text-align: center;
   flex-shrink: 0;
+
 }
 
 .status-message {

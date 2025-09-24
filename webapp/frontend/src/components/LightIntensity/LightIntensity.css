@@ -2,6 +2,7 @@
   border-radius: 18px;
   padding: 1.5rem;
   width: 230px;
+  height: 350px ;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -14,8 +15,6 @@
   overflow: hidden;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-
-
 
 .leaf-decoration {
   position: absolute;
@@ -102,7 +101,6 @@
   font-weight: 600;
 }
 
-
 .light-scale {
   display: flex;
   align-items: center;
@@ -129,6 +127,61 @@
   transition: width 0.7s ease-out, background 0.5s ease;
 }
 
+.light-control {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0.8rem 0;
+}
+
+.light-control-label {
+  font-size: 0.9rem;
+  color: #4A5568;
+  font-weight: 500;
+}
+
+.switch-selector {
+  position: relative;
+  display: flex;
+  background: #F7FAFC;
+  border-radius: 12px;
+  padding: 4px;
+  width: 200px;
+  border: 1px solid #E2E8F0;
+}
+
+.switch-option {
+  position: relative;
+  flex: 1;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 2;
+}
+
+.switch-option:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.switch-slider {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: calc(33.333% - 8px);
+  height: calc(100% - 8px);
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  z-index: 1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
 .light-footer {
   margin-top: 0.9rem;
   padding-top: 0.6rem;
@@ -149,8 +202,6 @@
   overflow: hidden;
   backdrop-filter: blur(4px);
 }
-
-
 
 .status-dark {
   background: linear-gradient(135deg, #455A64 0%, #607D8B 100%);
@@ -177,26 +228,6 @@
   color: #C62828;
 }
 
-@media (max-width: 480px) {
-  .light-card {
-    padding: 1rem;
-    width: 220px;
-    border-radius: 16px;
-  }
-
-  .light-title {
-    font-size: 1.1rem;
-  }
-
-  .light-value {
-    font-size: 2.4rem;
-  }
-
-  .light-unit {
-    font-size: 1.2rem;
-  }
-}
-
 .light-display-count {
   display: flex;
   flex-direction: column;
@@ -206,8 +237,8 @@
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 8px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  margin: 0.2rem auto; /* Автоматические отступы по бокам для центрирования */
-  width: 90%; /* Ширина относительно родителя */
+  margin: 0.2rem auto;
+  width: 90%;
   height: 40px;
   text-align: center;
   border: 1px solid rgba(150, 190, 150, 0.3);
@@ -229,4 +260,28 @@
   line-height: 1;
   margin-top: 0.1rem;
   letter-spacing: -0.5px;
+}
+
+@media (max-width: 480px) {
+  .light-card {
+    padding: 1rem;
+    width: 220px;
+    border-radius: 16px;
+  }
+
+  .light-title {
+    font-size: 1.1rem;
+  }
+
+  .light-value {
+    font-size: 2.4rem;
+  }
+
+  .light-unit {
+    font-size: 1.2rem;
+  }
+
+  .switch-selector {
+    width: 180px;
+  }
 }

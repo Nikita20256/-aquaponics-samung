@@ -28,10 +28,9 @@ const Temperature = ({ temperature }) => {
 
   const statusConfig = {
     nodata: { 
-      message: 'Данные отсутствуют', 
+      message: 'Нет данных', 
       color: '#EDF2F7', 
       text: '#4A5568',
-      icon: '❓'
     },
     hot: {
       message: 'Слишком жарко!',
@@ -147,8 +146,7 @@ const Temperature = ({ temperature }) => {
 
         {temperature === null && (
           <div className="no-data-indicator">
-            <div className="no-data-icon">❓</div>
-            <p>Нет данных о температуре</p>
+            
           </div>
         )}
       </div>

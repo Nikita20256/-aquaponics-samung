@@ -6,7 +6,10 @@ import LightIntensity from '../LightIntensity/LightIntensity';
 import SensorChart from '../SensorChart/SensorChart';
 import AquaponicsInfoCard from '../AquaponicsInfoCard/AquaponicsInfoCard';
 import './Dashboard.css';
-import Temperature from '../Temperature/Temperature';
+import Temperature from '../Temperature/temperature';
+
+// Импортируем фоновое изображение
+import backgroundImage from '../assets/images/flot.png';
 
 const LoadingSpinner = () => (
   <div className="loading-spinner">
@@ -217,7 +220,10 @@ function Dashboard() {
 
   if (error) {
     return (
-      <div className="dashboard-root">
+      <div 
+        className="dashboard-root" 
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <div className="dashboard-container">
           <ErrorMessage 
             message={error} 
@@ -233,7 +239,10 @@ function Dashboard() {
 
   if (!deviceId || loading) {
     return (
-      <div className="dashboard-root">
+      <div 
+        className="dashboard-root" 
+        style={{ backgroundImage: `url(${backgroundImage})` }}
+      >
         <div className="dashboard-container">
           <LoadingSpinner />
         </div>
@@ -242,7 +251,10 @@ function Dashboard() {
   }
 
   return (
-    <div className="dashboard-root">
+    <div 
+      className="dashboard-root" 
+      style={{ backgroundImage: `url(${backgroundImage})` }}
+    >
       <div className="dashboard-container">
         <div className="dashboard-cont"> 
           <div className="sensors-grid">

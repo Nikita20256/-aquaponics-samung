@@ -1,12 +1,47 @@
 .dashboard-root {
-  padding: 20px;
-  background-color: #f5f7fa;
-  min-height: 100vh;
+  padding: 33.3px;
+  min-height: 85vh;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+/* Эффект матового стекла для фона */
+.dashboard-root::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: inherit;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: brightness(0.7) contrast(1.1) blur(2px); /* Блеклый эффект */
+  z-index: -1;
+}
+
+/* Дополнительный слой для эффекта стекла */
+.dashboard-root::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.1); /* Легкая белая дымка */
+  backdrop-filter: blur(15px) saturate(180%); /* Эффект матового стекла */
+  -webkit-backdrop-filter: blur(15px) saturate(180%);
+  z-index: -1;
 }
 
 .dashboard-container {
   max-width: 1300px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .dashboard-title {
@@ -14,6 +49,7 @@
   color: #0F2925;
   margin-bottom: 25px;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.5);
 }
 
 .dashboard-cont {
@@ -21,23 +57,11 @@
   justify-content: space-between;
   gap: 0px;
 }
-.dashboard-SensorChart{
+
+.dashboard-SensorChart {
   display: flex;
   align-items: end;
-  gap: 20px 
-}
-
-
-.main-content {
-  flex: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.info-sidebar {
-  flex: 1;
-  min-width: 320px;
+  gap: 20px;
 }
 
 .sensors-cards {
@@ -46,35 +70,106 @@
   flex-wrap: wrap;
 }
 
+/* Стили карточек в стиле стекла */
 .sensor-card {
   flex: 1;
   min-width: 250px;
-  background: white;
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.25); /* Полупрозрачный белый */
+  border-radius: 16px;
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  backdrop-filter: blur(20px) saturate(180%); /* Эффект стекла */
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Светлая граница */
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2); /* Объемная тень + внутреннее свечение */
+  transition: all 0.3s ease;
 }
 
 .sensor-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-/* Стили для информационной карточки */
+/* Стили для информационной карточки в стиле темного стекла */
 .aquaponics-card {
-  background: linear-gradient(135deg, #0F2925 0%, #1a4314 100%);
-  border-radius: 12px;
+  background: rgba(15, 41, 37, 0.7); /* Полупрозрачный темный */
+  border-radius: 16px;
   padding: 20px;
   color: #fff;
-  border: 1px solid rgba(245, 215, 66, 0.3);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
 }
 
 .aquaponics-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(0,0,0,0.25);
+  background: rgba(15, 41, 37, 0.8);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+/* Стили для спиннера загрузки */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  color: white;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-message {
+  text-align: center;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin: 20px;
+}
+
+.retry-button {
+  background: rgba(15, 41, 37, 0.9);
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.retry-button:hover {
+  background: rgba(26, 67, 20, 0.9);
+  transform: translateY(-2px);
 }
 
 /* Адаптивные стили */
@@ -83,13 +178,37 @@
     flex-direction: column;
   }
   
-  .info-sidebar {
-    width: 100%;
-    min-width: auto;
+  .dashboard-SensorChart {
+    flex-direction: column;
+    align-items: stretch;
   }
   
   .sensors-cards {
     justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-root {
+    padding: 20px;
+  }
+  
+  .dashboard-root::before {
+    filter: brightness(0.8) contrast(1.1) blur(1px);
+  }
+  
+  .dashboard-root::after {
+    backdrop-filter: blur(10px) saturate(160%);
+    -webkit-backdrop-filter: blur(10px) saturate(160%);
+  }
+  
+  .sensors-cards {
+    gap: 20px;
+  }
+  
+  .sensor-card {
+    backdrop-filter: blur(15px) saturate(160%);
+    -webkit-backdrop-filter: blur(15px) saturate(160%);
   }
 }
 
@@ -100,5 +219,9 @@
   
   .dashboard-title {
     font-size: 1.5rem;
+  }
+  
+  .dashboard-SensorChart {
+    gap: 15px;
   }
 }
