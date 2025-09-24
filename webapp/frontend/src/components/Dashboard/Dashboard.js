@@ -259,12 +259,13 @@ function Dashboard() {
         <div className="dashboard-cont"> 
           <div className="sensors-grid">
             <div className="sensors-cards">
-              <WaterLevel waterLevel={sensorData.waterLevel}/>
+              <WaterLevel waterLevel={sensorData.waterLevel} deviceId={deviceId}/>
               <Temperature temperature={sensorData.temperature}/>
               <Humidity humidity={sensorData.humidity}/>
               <LightIntensity 
                 lightLevel={sensorData.light}
                 lightSwitches={sensorData.lightSwitches}
+                deviceId={deviceId}
               />
             </div>
             <div className="dashboard-SensorChart">

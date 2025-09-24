@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './LightIntensity.css';
 
-const LightIntensity = ({ lightLevel, lightSwitches }) => {
+const BASE_URL = 'http://localhost:3000';
+const MODE_FROM_API = { off: 0, auto: 1, on: 2 };
+const MODE_TO_API = { 0: 'off', 1: 'auto', 2: 'on' };
+
+const LightIntensity = ({ lightLevel, lightSwitches, deviceId }) => {
   const [lightMode, setLightMode] = useState(1); // 0: off, 1: auto, 2: on
+  const [isSaving, setIsSaving] = useState(false);
 
   // Упрощенная цветовая палитра
   const colors = {
@@ -32,8 +38,44 @@ const LightIntensity = ({ lightLevel, lightSwitches }) => {
 
   // Функция для переключения режима освещения
   const handleLightModeChange = (value) => {
+    if (!deviceId || isSaving) return;
+    const prev = lightMode;
+    const modeStr = MODE_TO_API[value] || 'auto';
     setLightMode(value);
+    setIsSaving(true);
+    axios.post(
+      '/control/light',
+      { mode: modeStr },
+      {
+        baseURL: BASE_URL,
+        params: { device_id: deviceId },
+        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+      }
+    ).catch((err) => {
+      console.error('Не удалось установить режим света:', err);
+      setLightMode(prev);
+    }).finally(() => setIsSaving(false));
   };
+
+  // Загрузка текущего режима с бэка
+  useEffect(() => {
+    if (!deviceId) return;
+    let cancelled = false;
+    axios.get('/control/modes', {
+      baseURL: BASE_URL,
+      params: { device_id: deviceId },
+      headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+    }).then((res) => {
+      if (cancelled) return;
+      const apiMode = res.data?.light;
+      if (apiMode && apiMode in MODE_FROM_API) {
+        setLightMode(MODE_FROM_API[apiMode]);
+      }
+    }).catch((err) => {
+      console.error('Не удалось получить режимы управления:', err);
+    });
+    return () => { cancelled = true; };
+  }, [deviceId]);
 
   return (
     <div className="light-card">
