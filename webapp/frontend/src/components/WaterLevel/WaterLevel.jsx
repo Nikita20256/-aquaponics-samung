@@ -72,7 +72,6 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
   useEffect(() => {
     if (!waterRef.current || waterLevel !== 1) return;
 
-    // Создаем пузырьки только если аэрация включена или в авторежиме при нормальном уровне воды
     const shouldCreateBubbles = aerationMode === 2 || (aerationMode === 1 && waterLevel === 1);
 
     if (!shouldCreateBubbles) return;
@@ -109,7 +108,6 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
     return () => clearInterval(bubbleInterval);
   }, [waterLevel, aerationMode]);
 
-  // Загрузка текущего режима аэрации
   useEffect(() => {
     if (!deviceId) return;
     let cancelled = false;
@@ -141,20 +139,16 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
         {waterLevel === 1 ? (
           <div className="water-tank">
             <div className="glass-container" ref={waterRef}>
-              {/* Стеклянный резервуар */}
               <div className="glass">
-                {/* Вода */}
                 <div 
                   className="water-fill" 
                   style={{
                     background: `linear-gradient(to bottom, ${colors.waterSurface}, ${colors.water})`,
                   }}
                 >
-                  {/* Блеск на поверхности воды */}
                   <div className="water-shine"></div>
                 </div>
                 
-                {/* Полоски на стекле */}
                 <div className="glass-stripes">
                   {[...Array(10)].map((_, i) => (
                     <div key={i} className="glass-stripe"></div>
@@ -163,18 +157,16 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
               </div> 
             </div>
             
-            {/* Переключатель аэрации под шкалой */}
             <div className="aeration-control">
               <div className="aeration-label">Аэрация</div>
               <div className="switch-selector">
-                {aerationConfig.map((mode, index) => (
+                {aerationConfig.map((mode) => (
                   <button
                     key={mode.value}
                     className={`switch-option ${aerationMode === mode.value ? 'active' : ''}`}
                     onClick={() => handleAerationChange(mode.value)}
                     style={{
                       backgroundColor: aerationMode === mode.value ? mode.color : 'transparent',
-                      color: aerationMode === mode.value ? 'white' : '#4A5568'
                     }}
                   >
                     {mode.label}
@@ -198,18 +190,16 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
               </div> 
             </div>
             
-            {/* Переключатель аэрации для пустого резервуара */}
             <div className="aeration-control">
-              <div className="aeration-label"> Режим аэрация</div>
+              <div className="aeration-label">Режим аэрации</div>
               <div className="switch-selector">
-                {aerationConfig.map((mode, index) => (
+                {aerationConfig.map((mode) => (
                   <button
                     key={mode.value}
                     className={`switch-option ${aerationMode === mode.value ? 'active' : ''}`}
                     onClick={() => handleAerationChange(mode.value)}
                     style={{
                       backgroundColor: aerationMode === mode.value ? mode.color : 'transparent',
-                      color: aerationMode === mode.value ? 'white' : '#4A5568'
                     }}
                   >
                     {mode.label}
@@ -227,8 +217,6 @@ const WaterLevel = ({ waterLevel, deviceId }) => {
           </div>
         )}
       </div>
-
-     
     </div>
   );
 };

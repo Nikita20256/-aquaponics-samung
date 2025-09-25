@@ -75,7 +75,7 @@ const SensorChart = ({ historicalData, startDate, endDate, onTimeRangeChange }) 
   // Настройка цветов/единиц под выбранную метрику
   const metricConfig = {
     humidity: { label: 'Влажность (%)', color: 'rgb(54, 162, 235)', bg: 'rgba(54, 162, 235, 0.2)', unit: '%' },
-    light: { label: 'Освещённость', color: 'rgb(255, 206, 86)', bg: 'rgba(255, 206, 86, 0.2)', unit: '' },
+    light: { label: 'Освещённость(Lux)', color: 'rgb(255, 206, 86)', bg: 'rgba(255, 206, 86, 0.2)', unit: '' },
     temperature: { label: 'Температура (°C)', color: 'rgb(255, 99, 132)', bg: 'rgba(255, 99, 132, 0.2)', unit: '°C' }
   };
 

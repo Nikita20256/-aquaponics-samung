@@ -67,10 +67,10 @@
   margin-right: -12px;
 }
 
-.controls-left { display: inline-flex; gap: 6px; align-items: center; justify-self: start; }
-.controls-left { margin-left: -24px; }
-.controls-center { display: inline-flex; gap: 12px; justify-self: start; }
-.controls-right { display: inline-flex; gap: 10px; justify-self: end; align-items: center; margin-right: -16px; }
+.controls-left { display: inline-flex; gap: 10px; align-items: center; justify-self: start; }
+.controls-left { margin-left: -120px; }
+.controls-center {  margin-left: 20px;display: inline-flex; gap: 102px; justify-self: start; }
+.controls-right { display: inline-flex; gap: -22px; justify-self: end; align-items: center; margin-right: -106px; }
 .chart-type label { margin-left: 16px; }
 .chart-type select {
   margin-left: 6px;

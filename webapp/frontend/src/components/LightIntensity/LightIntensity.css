@@ -173,7 +173,7 @@
 .switch-slider {
   position: absolute;
   top: 4px;
-  left: 4px;
+  left: 12px;
   width: calc(33.333% - 8px);
   height: calc(100% - 8px);
   border-radius: 8px;

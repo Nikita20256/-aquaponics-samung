@@ -3,7 +3,7 @@
 }
 
 .react-datepicker__input-container input {
-  padding: 4px 8px;
+  padding: 4px 3px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 13px;
@@ -19,7 +19,7 @@
 .react-datepicker .react-datepicker__day-name,
 .react-datepicker .react-datepicker__day,
 .react-datepicker .react-datepicker__time-name {
-  width: 1.6rem;
+  width: 1.2rem;
   line-height: 1.6rem;
   margin: 0.1rem;
 }
