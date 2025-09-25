@@ -3,10 +3,25 @@
 }
 
 .react-datepicker__input-container input {
-  padding: 8px 12px;
+  padding: 4px 8px;
   border: 1px solid #ddd;
   border-radius: 4px;
-  font-size: 14px;
+  font-size: 13px;
+}
+
+/* Уменьшаем календарь, чтобы не занимал лишнее белое пространство */
+.react-datepicker {
+  font-size: 12px;
+}
+.react-datepicker .react-datepicker__header {
+  padding-top: 6px;
+}
+.react-datepicker .react-datepicker__day-name,
+.react-datepicker .react-datepicker__day,
+.react-datepicker .react-datepicker__time-name {
+  width: 1.6rem;
+  line-height: 1.6rem;
+  margin: 0.1rem;
 }
 
 .chart-controls {

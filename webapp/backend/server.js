@@ -317,7 +317,7 @@ app.post('/login', async (req, res) => {
       }
 
       // Создаём JWT-токен
-      const token = jwt.sign({ device_id: row.device_id }, JWT_SECRET, { expiresIn: '1h' }); //время действия 1 час
+      const token = jwt.sign({ device_id: row.device_id }, JWT_SECRET, { expiresIn: '24h' }); //время действия 1 час
       res.json({ token });
     } catch (err) {
       console.error(`Bcrypt error: ${err.message}`);
