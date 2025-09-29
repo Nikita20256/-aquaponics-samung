@@ -1,5 +1,6 @@
 /* AquaponicsInfoCard.css */
 .aquaponics-card {
+<<<<<<< HEAD
   width: 280px;
   height: 408px;
   border-radius: 20px;
@@ -121,16 +122,96 @@
 .fact-container {
   padding: 20px;
   min-height: 240px;
+=======
+  width: 90px;
+  height: 380px;
+  background: rgba(18, 24, 38, 0.9);
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.3), 
+              0 10px 30px rgba(0, 0, 0, 0.5);
+  transition: all 0.4s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  position: relative;
+}
+
+.aquaponics-card::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, transparent, transparent, 
+              rgba(16, 185, 129, 0.2), transparent, transparent);
+  z-index: -1;
+  border-radius: 22px;
+  animation: borderGlow 3s linear infinite;
+}
+
+.aquaponics-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 30px rgba(16, 185, 129, 0.4), 
+              0 15px 35px rgba(0, 0, 0, 0.6);
+}
+
+.card-header {
+  padding: 22px 24px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.15);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.2);
+  position: relative;
+}
+
+.card-header::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 24px;
+  right: 24px;
+  height: 1px;
+  background: linear-gradient(90deg, 
+              transparent, 
+              rgba(16, 185, 129, 0.5), 
+              transparent);
+}
+
+.device-id {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #10b981;
+  text-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.fact-container {
+  padding: 24px;
+  min-height: 220px;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
   display: flex;
   flex-direction: column;
   justify-content: center;
   position: relative;
+<<<<<<< HEAD
   z-index: 1;
+=======
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 .fact-content {
   position: relative;
   padding: 20px;
+<<<<<<< HEAD
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(8px);
   border-radius: 14px;
@@ -144,6 +225,17 @@
   font-size: 14px;
   line-height: 1.5;
   color: #1f2937;
+=======
+  background: rgba(16, 185, 129, 0.08);
+  border-radius: 16px;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.fact-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
   margin: 0;
   opacity: 0;
   transform: translateY(10px);
@@ -160,14 +252,20 @@
 .fact-icons {
   display: flex;
   justify-content: center;
+<<<<<<< HEAD
   margin-top: 20px;
   gap: 18px;
   z-index: 1;
   position: relative;
+=======
+  margin-top: 24px;
+  gap: 20px;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 .icon {
   font-size: 28px;
+<<<<<<< HEAD
   transition: all 0.3s ease;
   display: inline-block;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
@@ -179,12 +277,23 @@
 
 .plant-icon:hover {
   transform: scale(1.2) rotate(5deg);
+=======
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.5));
+}
+
+.icon:hover {
+  transform: scale(1.2) rotate(5deg);
+  opacity: 1;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 .watermark {
   position: absolute;
   bottom: 10px;
   right: 10px;
+<<<<<<< HEAD
   font-size: 24px;
   opacity: 0.08;
 }
@@ -208,11 +317,34 @@
   border-radius: 3px;
   overflow: hidden;
   box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+=======
+  font-size: 36px;
+  opacity: 0.1;
+  filter: drop-shadow(0 0 3px rgba(16, 185, 129, 0.3));
+}
+
+.card-footer {
+  padding: 16px 24px 20px;
+  border-top: 1px solid rgba(16, 185, 129, 0.2);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.progress-container {
+  width: 70%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 .progress-bar {
   height: 100%;
   width: 100%;
+<<<<<<< HEAD
   background: linear-gradient(90deg, #ffffff, #a7f3d0);
   border-radius: 3px;
   animation: progressAnimation 15s linear forwards;
@@ -223,11 +355,24 @@
   color: white;
   font-weight: 600;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+=======
+  background: linear-gradient(90deg, #10b981 0%, #34d399 100%);
+  border-radius: 3px;
+  animation: progressAnimation 15s linear forwards;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+}
+
+.next-fact {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  font-weight: 500;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 @keyframes progressAnimation {
   0% { 
     width: 100%;
+<<<<<<< HEAD
   }
   100% { 
     width: 0%;
@@ -248,6 +393,25 @@
   100% {
     transform: translateY(-100%) scale(1);
     opacity: 0;
+=======
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+  }
+  100% { 
+    width: 0%;
+    box-shadow: 0 0 4px rgba(16, 185, 129, 0.3);
+  }
+}
+
+@keyframes borderGlow {
+  0% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 0.3;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
   }
 }
 
@@ -255,7 +419,11 @@
 @keyframes cardEntrance {
   from {
     opacity: 0;
+<<<<<<< HEAD
     transform: translateY(20px) scale(0.98);
+=======
+    transform: translateY(20px) scale(0.95);
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
   }
   to {
     opacity: 1;
@@ -264,7 +432,11 @@
 }
 
 .aquaponics-card {
+<<<<<<< HEAD
   animation: cardEntrance 0.5s ease-out;
+=======
+  animation: cardEntrance 0.6s ease-out;
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 }
 
 /* Адаптивность для мобильных устройств */
@@ -279,4 +451,9 @@
   .fact-container {
     min-height: 200px;
   }
+<<<<<<< HEAD
 }
+=======
+}
+
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee

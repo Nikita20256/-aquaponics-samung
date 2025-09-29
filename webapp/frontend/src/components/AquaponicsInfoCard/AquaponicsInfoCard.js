@@ -1,10 +1,17 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
 import React, { useState, useEffect } from 'react';
 import './AquaponicsInfoCard.css';
 
 const AQUAPONICS_FACTS = [
   "Салат в аквапонике созревает за 30 дней вместо 60 в почве. Базилик из аквапоники содержит на 15% больше эфирных масел.",
   "Идеальный pH для системы: 6.8-7.0 (нейтральная среда). Аквапоника полностью исключает использование пестицидов.",
+<<<<<<< HEAD
+=======
+  "Система работает бесшумно - уровень звука менее 30 дБ. Ночью растения продолжают поглощать нитраты, очищая воду для рыб.",
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
   "Тилапия - идеальная рыба для новичков: неприхотлива и быстро растёт. Клубника в аквапонике даёт урожай в 2 раза чаще.",
   "Система потребляет меньше энергии, чем холодильник. Кормите рыб 3 раза в день небольшими порциями для оптимального роста.",
   "Первые аквапонические системы использовались ещё ацтеками. Растения поглощают до 95% отходов жизнедеятельности рыб.",
@@ -48,6 +55,7 @@ const AquaponicsInfoCard = ({ deviceId }) => {
 
   return (
     <div className="aquaponics-card" onClick={updateFactAndIcons}>
+<<<<<<< HEAD
       <div className="card-background">
         <div className="water-bubbles">
           <div className="bubble bubble-1"></div>
@@ -59,6 +67,8 @@ const AquaponicsInfoCard = ({ deviceId }) => {
         <div className="plant-decoration plant-right">🌱</div>
       </div>
       
+=======
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
       <div className="card-header">
         <div className="device-id">СИСТЕМА #{deviceId}</div>
         <div className="card-title">Факт об аквапонике</div>
@@ -67,6 +77,7 @@ const AquaponicsInfoCard = ({ deviceId }) => {
       <div className="fact-container">
         <div className="fact-content">
           <p className={`fact-text ${isVisible ? 'visible' : ''}`}>{currentFact}</p>
+<<<<<<< HEAD
           <div className="watermark">💧</div>
         </div>
         
@@ -75,6 +86,20 @@ const AquaponicsInfoCard = ({ deviceId }) => {
           <span className="icon plant-icon">{plantIcon}</span>
         </div>
       </div>
+=======
+          <div className="watermark">🌱</div>
+        </div>
+        
+        <div className="fact-icons">
+          <span className="icon">{fishIcon}</span>
+          <span className="icon">{plantIcon}</span>
+        </div>
+      </div>
+      
+      <div className="card-footer">
+       
+      </div>
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
     </div>
   );
 };

@@ -14,7 +14,11 @@
     "react-datepicker": "^8.3.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.0",
+<<<<<<< HEAD
     "react-scripts": "^5.0.1",
+=======
+    "react-scripts": "5.0.1",
+>>>>>>> c59651b198c7f3208073727cde6cd5a0941857ee
     "web-vitals": "^2.1.4"
   },
   "scripts": {
