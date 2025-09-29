@@ -1,0 +1,282 @@
+/* AquaponicsInfoCard.css */
+.aquaponics-card {
+  width: 280px;
+  height: 408px;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.4s ease;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  cursor: pointer;
+  border: none;
+  position: relative;
+}
+
+.aquaponics-card:hover {
+  transform: translateY(-6px);
+  
+}
+
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+  overflow: hidden;
+  background: linear-gradient(145deg, #10b981, #0da271, #0c8a62, #0a7554);
+}
+
+.water-bubbles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+.bubble {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  animation: floatUp 8s infinite ease-in-out;
+}
+
+.bubble-1 {
+  width: 8px;
+  height: 8px;
+  left: 15%;
+  animation-delay: 0s;
+  animation-duration: 9s;
+}
+
+.bubble-2 {
+  width: 6px;
+  height: 6px;
+  left: 45%;
+  animation-delay: 2s;
+  animation-duration: 11s;
+}
+
+.bubble-3 {
+  width: 4px;
+  height: 4px;
+  left: 75%;
+  animation-delay: 4s;
+  animation-duration: 7s;
+}
+
+.bubble-4 {
+  width: 7px;
+  height: 7px;
+  left: 30%;
+  animation-delay: 1s;
+  animation-duration: 10s;
+}
+
+.plant-decoration {
+  position: absolute;
+  font-size: 35px;
+  opacity: 0.15;
+  z-index: 0;
+}
+
+.plant-left {
+  bottom: 15px;
+  left: 15px;
+  transform: rotate(-8deg);
+}
+
+.plant-right {
+  top: 45px;
+  right: 15px;
+  transform: rotate(12deg);
+}
+
+.card-header {
+  padding: 20px 24px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.device-id {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+.fact-container {
+  padding: 20px;
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.fact-content {
+  position: relative;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(8px);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 
+    0 4px 15px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.fact-text {
+  font-size: 14px;
+  line-height: 1.5;
+  color: #1f2937;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  font-weight: 500;
+  text-align: center;
+}
+
+.fact-text.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fact-icons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  gap: 18px;
+  z-index: 1;
+  position: relative;
+}
+
+.icon {
+  font-size: 28px;
+  transition: all 0.3s ease;
+  display: inline-block;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.fish-icon:hover {
+  transform: scale(1.2) rotate(-5deg);
+}
+
+.plant-icon:hover {
+  transform: scale(1.2) rotate(5deg);
+}
+
+.watermark {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
+  opacity: 0.08;
+}
+
+.card-footer {
+  padding: 16px 20px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.progress-container {
+  width: 65%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(90deg, #ffffff, #a7f3d0);
+  border-radius: 3px;
+  animation: progressAnimation 15s linear forwards;
+}
+
+.next-fact {
+  font-size: 11px;
+  color: white;
+  font-weight: 600;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@keyframes progressAnimation {
+  0% { 
+    width: 100%;
+  }
+  100% { 
+    width: 0%;
+  }
+}
+
+@keyframes floatUp {
+  0% {
+    transform: translateY(100%) scale(0.7);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.3;
+  }
+  85% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-100%) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Анимация появления карточки */
+@keyframes cardEntrance {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.aquaponics-card {
+  animation: cardEntrance 0.5s ease-out;
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 480px) {
+  .aquaponics-card {
+    width: 90%;
+    max-width: 320px;
+    height: auto;
+    min-height: 340px;
+  }
+  
+  .fact-container {
+    min-height: 200px;
+  }
+}

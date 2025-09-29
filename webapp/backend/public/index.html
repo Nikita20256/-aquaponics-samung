@@ -1,0 +1,83 @@
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function App() {
+  const [temperature, setTemperature] = useState(null);
+  const [history, setHistory] = useState([]);
+  const [error, setError] = useState(null);
+
+  const fetchTemperature = async () => {
+    try {
+      const response = await axios.get('http://192.168.248.109:3000/temperature');
+      setTemperature(response.data.temperature);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching temperature:', err);
+      setError('Не удалось загрузить текущую температуру');
+    }
+  };
+
+  const fetchHistory = async () => {
+    try {
+      const response = await axios.get('http://192.168.248.109:3000/history');
+      setHistory(response.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching history:', err);
+      setError('Не удалось загрузить историю');
+    }
+  };
+
+  useEffect(() => {
+    fetchTemperature();
+    fetchHistory();
+    const interval = setInterval(() => {
+      fetchTemperature();
+      fetchHistory();
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <h1>Температура аквапоники</h1>
+      {error && <p>{error}</p>}
+      <div>
+        <h2>Текущая температура</h2>
+        {temperature !== null ? (
+          <p>{temperature} °C</p>
+        ) : (
+          <p>Загрузка...</p>
+        )}
+        <button onClick={() => { fetchTemperature(); fetchHistory(); }}>
+          Обновить
+        </button>
+      </div>
+      <div>
+        <h2>История (последние 10 значений)</h2>
+        {history.length > 0 ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Температура (°C)</th>
+                <th>Время</th>
+              </tr>
+            </thead>
+            <tbody>
+              {history.map((entry, index) => (
+                <tr key={index}>
+                  <td>{entry.value}</td>
+                  <td>{new Date(entry.timestamp).toLocaleString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p>История пока пуста</p>
+        )}
+      </div>
+    </div>
+  );
+}
+
+export default App;

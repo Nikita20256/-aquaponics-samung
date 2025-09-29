@@ -1,0 +1,417 @@
+/* Plants.css */
+.plants-container {
+  position: relative;
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plants-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, #f8fff8 0%, #e8f5e8 100%);
+  z-index: 0;
+}
+
+.background-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('./assets/images/flot.png') center/cover no-repeat;
+  opacity: 0.05;
+}
+
+.plants-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1400px;
+}
+
+.plants-grid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 160px;
+}
+
+.plant-card {
+  background: #138962;
+  border-radius: 25px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  padding: 40px 30px;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  width: 400px;
+  height: 670px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.plant-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 35px rgba(19, 137, 98, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+.plant-image-container {
+  width: 240px;
+  height: 240px;
+  margin: 0 auto 30px;
+  background: transparent;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0;
+}
+
+.plant-image {
+  width: 370px;
+  height: 370px;
+  object-fit: contain;
+  border-radius: 0;
+  filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
+  background: transparent;
+}
+
+.plant-name {
+  color: #D4E5A3;
+  font-size: 48px;
+  font-weight: normal;
+  margin: 0;
+  margin-bottom: 5px;
+  margin-top: 20px;
+  font-family: 'Calypso', sans-serif;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* Модальное окно */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 20px;
+  width: 1145px; /* Фиксированная ширина */
+  height: 795px; /* Фиксированная высота */
+  position: relative;
+  animation: slideUp 0.3s ease;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-close {
+  position: absolute;
+  top: 20px;
+  right: 25px;
+  background: none;
+  border: none;
+  font-size: 35px;
+  color: #666;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  z-index: 10;
+}
+
+.modal-close:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+.modal-header {
+  background: #138962;
+  padding: 35px 40px;
+  border-radius: 20px 20px 0 0;
+  flex-shrink: 0;
+}
+
+.modal-title {
+  color: white;
+  font-size: 3rem;
+  font-weight: normal;
+  margin: 0;
+  font-family: 'Calypso', sans-serif;
+  text-align: center;
+}
+
+.modal-body {
+  padding: 50px;
+  display: flex;
+  gap: 50px;
+  align-items: flex-start;
+  flex: 1;
+  overflow: hidden;
+}
+
+.modal-image-container {
+  flex: 0 0 280px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f8fff8;
+  border-radius: 15px;
+  padding: 20px;
+  border: 2px solid rgba(19, 137, 98, 0.1);
+}
+
+.modal-image {
+  width: 100%;
+  max-width: 240px;
+  height: auto;
+  object-fit: contain;
+}
+
+.modal-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.info-section {
+  background: #f8fff8;
+  padding: 25px;
+  border-radius: 12px;
+  border-left: 5px solid #138962;
+}
+
+.info-title {
+  color: #138962;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+}
+
+.info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.info-list li {
+  padding: 10px 0;
+  line-height: 1.6;
+  color: #333;
+  position: relative;
+  padding-left: 20px;
+  border-bottom: 1px solid rgba(19, 137, 98, 0.1);
+  font-size: 1.1rem;
+}
+
+.info-list li:last-child {
+  border-bottom: none;
+}
+
+.info-list li::before {
+  content: "•";
+  color: #138962;
+  font-weight: bold;
+  position: absolute;
+  left: 0;
+  top: 10px;
+  font-size: 1.3rem;
+}
+
+.description-section {
+  background: #f8fff8;
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid rgba(19, 137, 98, 0.2);
+}
+
+.plant-description {
+  line-height: 1.7;
+  color: #555;
+  font-size: 1.2rem;
+  margin: 0;
+  font-style: italic;
+}
+
+/* Анимации */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Адаптация для ноутбуков */
+@media (max-width: 1200px) {
+  .modal-content {
+    width: 95%;
+    height: 85vh;
+    max-width: 1000px;
+  }
+  
+  .modal-body {
+    padding: 40px;
+    gap: 40px;
+  }
+  
+  .modal-image-container {
+    flex: 0 0 220px;
+  }
+  
+  .modal-image {
+    max-width: 200px;
+  }
+  
+  .modal-title {
+    font-size: 2.5rem;
+  }
+}
+
+/* Адаптация для планшетов */
+@media (max-width: 992px) {
+  .modal-content {
+    width: 95%;
+    height: 90vh;
+  }
+  
+  .modal-body {
+    flex-direction: column;
+    padding: 30px;
+    gap: 30px;
+  }
+  
+  .modal-image-container {
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+  
+  .modal-image {
+    max-width: 180px;
+  }
+  
+  .modal-title {
+    font-size: 2.2rem;
+  }
+  
+  .modal-header {
+    padding: 25px 30px;
+  }
+}
+
+/* Адаптация для мобильных устройств */
+@media (max-width: 768px) {
+  .modal-content {
+    width: 95%;
+    height: 95vh;
+  }
+  
+  .modal-body {
+    padding: 25px;
+    gap: 25px;
+  }
+  
+  .modal-image-container {
+    max-width: 150px;
+    padding: 15px;
+  }
+  
+  .modal-image {
+    max-width: 140px;
+  }
+  
+  .modal-title {
+    font-size: 2rem;
+  }
+  
+  .modal-header {
+    padding: 20px 25px;
+  }
+  
+  .info-title {
+    font-size: 1.3rem;
+  }
+  
+  .info-list li {
+    font-size: 1rem;
+  }
+  
+  .plant-description {
+    font-size: 1.1rem;
+  }
+}
+
+/* Остальные медиа-запросы для карточек растений */
+@media (max-width: 1440px) {
+  .plant-name { font-size: 42px; }
+}
+
+@media (max-width: 1200px) {
+  .plants-grid { gap: 80px; }
+  .plant-card { width: 350px; height: 600px; padding: 30px 25px; }
+  .plant-image-container { width: 220px; height: 220px; margin-bottom: 25px; }
+  .plant-name { font-size: 36px; margin-bottom: 95px; }
+}
+
+@media (max-width: 992px) {
+  .plant-name { font-size: 32px; }
+}
+
+@media (max-width: 768px) {
+  .plants-grid { flex-direction: column; gap: 40px; }
+  .plant-card { width: 320px; height: 550px; padding: 25px 20px; }
+  .plant-image-container { width: 200px; height: 200px; margin-bottom: 20px; }
+  .plant-name { font-size: 28px; margin-bottom: 85px; }
+  .plants-container { padding: 20px 15px; }
+}
+
+@media (max-width: 480px) {
+  .plant-card { width: 280px; height: 500px; padding: 20px 15px; }
+  .plant-image-container { width: 180px; height: 180px; margin-bottom: 15px; }
+  .plant-name { font-size: 24px; margin-bottom: 75px; }
+}
+
+@media (max-width: 360px) {
+  .plant-name { font-size: 22px; }
+}

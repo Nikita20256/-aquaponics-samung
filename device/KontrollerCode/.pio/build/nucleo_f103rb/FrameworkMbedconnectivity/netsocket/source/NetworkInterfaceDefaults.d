@@ -1,0 +1,25 @@
+.pio\build\nucleo_f103rb\FrameworkMbedconnectivity\netsocket\source\NetworkInterfaceDefaults.o: \
+ C:\Users\panda\.platformio\packages\framework-mbed\connectivity\netsocket\source\NetworkInterfaceDefaults.cpp \
+ .pio\build\nucleo_f103rb/mbed_config.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/NetworkInterface.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/nsapi_types.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_toolchain.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_preprocessor.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/SocketAddress.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/nsapi_types.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/Callback.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_cstddef \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_new \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_assert.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_toolchain.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_type_traits \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_functional \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_memory \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_utility \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/CXXSUP~1/mstd_iterator \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/DNS.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/EthInterface.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/WiFiInterface.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/WiFiAccessPoint.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/CellularInterface.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/NETSOC~1/include/netsocket/MeshInterface.h

@@ -1,0 +1,172 @@
+.humidity-card {
+  border-radius: 16px;
+  padding: 1rem;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  border: 1px solid #C7E5C7; /* Природный светло-зелёный */
+  box-shadow: 0 4px 12px rgba(100, 140, 100, 0.15); /* Мягкие тени */
+  background: linear-gradient(135deg, #F3FBF1 0%, #E2F4E1 100%); /* Спокойный фон */
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.humidity-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(85, 125, 85, 0.25);
+}
+
+.humidity-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed #CDE7CD;
+  margin-bottom: 1rem;
+}
+
+.humidity-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #3B643B;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  text-shadow: 0 1px 1px rgba(255,255,255,0.7);
+}
+
+.weather-icons {
+  display: flex;
+  gap: 0.5rem;
+  color: #4E7B4E;
+}
+
+.icon {
+  font-size: 1rem;
+  transition: transform 0.3s;
+}
+
+.icon:hover {
+  transform: scale(1.2);
+  color: #2E5F2E;
+}
+
+.humidity-display {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 0.8rem;
+  border-radius: 12px;
+  margin: 0.1rem 0;
+  box-shadow: inset 0 0 6px rgba(170, 200, 170, 0.3);
+  border: 1px solid rgba(130, 170, 130, 0.3);
+}
+
+.humidity-value {
+  font-size: 2.8rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #4C864C 0%, #72AC72 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  margin: 0;
+  line-height: 1;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.humidity-unit {
+  font-size: 1.3rem;
+  vertical-align: super;
+  margin-left: 4px;
+  color: #5F8E5F;
+}
+
+.humidity-scale {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.2rem;
+  font-size: 0.60rem;
+  color: #406140;
+}
+
+.scale-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.3rem;
+  font-size: 0.65rem;
+  color: #6C9C6C;
+}
+
+.scale-bar {
+  flex-grow: 1;
+  height: 8px;
+  background: #EEF8EE;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.08);
+}
+
+.scale-progress {
+  height: 100%;
+  background: linear-gradient(90deg, #CBE6CB 0%, #9FCF9F 40%, #78B578 80%, #5A955A 100%);
+  border-radius: 4px;
+  transition: width 0.6s ease;
+}
+
+.humidity-footer {
+  margin-top: 1rem;
+  padding-top: 0.8rem;
+  border-top: 1px dashed #CDE7CD;
+}
+
+.status-message {
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 12px;
+  padding: 0.5rem 0.8rem;
+  margin: 0.5rem 0;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.04);
+}
+
+/* Статусные стили */
+.status-optimal {
+  background: linear-gradient(135deg, #D8F2D8 0%, #BCE8BC 100%);
+  color: #2E5F2E;
+}
+.status-optimal::before {
+  content: "✓ ";
+  color: #3C763C;
+}
+
+.status-warning {
+  background: linear-gradient(135deg, #FFF4D5 0%, #FCE5AB 100%);
+  color: #B08500;
+}
+
+
+@media (max-width: 480px) {
+  .humidity-card {
+    padding: 0.8rem;
+    width: 200px;
+    border-radius: 14px;
+  }
+
+  .humidity-title {
+    font-size: 1rem;
+  }
+
+  .humidity-value {
+    font-size: 2.2rem;
+  }
+
+  .humidity-unit {
+    font-size: 1.1rem;
+  }
+
+  .scale-bar {
+    height: 6px;
+  }
+}

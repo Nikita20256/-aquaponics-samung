@@ -1,0 +1,33 @@
+.pio\build\nucleo_f103rb\FrameworkMbedconnectivity\nfc\source\NFCRemoteInitiator.o: \
+ C:\Users\panda\.platformio\packages\framework-mbed\connectivity\nfc\source\NFCRemoteInitiator.cpp \
+ .pio\build\nucleo_f103rb/mbed_config.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/include/nfc/NFCRemoteInitiator.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/include/nfc/NFCDefinitions.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/nfc_errors.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/include/nfc/NFCRemoteEndpoint.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/include/nfc/NFCNDEFCapable.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/Span.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_assert.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_toolchain.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/platform/include/platform/mbed_preprocessor.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/ndef/ndef.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/nfc_common.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/nfc_errors.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/platform/nfc_debug.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_macros.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer_reader.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer_builder.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_stream.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer_reader.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/acore/acore/ac_buffer_builder.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/tech/iso7816/iso7816_app.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/tech/iso7816/iso7816.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/transceiver/protocols.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/tech/isodep/isodep_target.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/transceiver/transceiver.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/transceiver/protocols.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/platform/nfc_transport.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/platform/nfc_scheduler.h \
+ C:\Users\panda\PLATFO~1\packages\FRAMEW~1/CONNEC~1/nfc/LIBRAR~1/stack/tech/isodep/isodep.h
